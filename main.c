@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "utils/signal_handler.h"
-#include "utils/binaries_execution.h"
+#include "utils/parser.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
 
@@ -45,10 +45,10 @@ int main() {
         if (strcmp(buffer, "exit") == 0) {
             break;
         } else {
-            binariesSearch(buffer);
+            command_tokenizer(buffer);
         }
     }
 
-    printf("Exiting program.\n");
+    printf("Closing NebuShell.\n");
     return EXIT_SUCCESS;
 }
