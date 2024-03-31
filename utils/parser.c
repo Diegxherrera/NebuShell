@@ -9,7 +9,7 @@
 //
 
 void command_tokenizer(char command[1024]) { // TODO: CT should return a characters 2D-array with command + arguments
-    char* workingDirectory[1024];
+    char *workingDirectory[1024];
     int start = 0;
     int end = strlen(command) - 1;
 
@@ -27,10 +27,16 @@ void command_tokenizer(char command[1024]) { // TODO: CT should return a charact
 
     if (strcmp(command, "pwd") == 0) {
         print_working_directory(workingDirectory);
-    } else if(strcmp(command, "ls") == 0) {
+    } else if (strcmp(command, "ls") == 0) {
         list_directory(workingDirectory); //TODO: Code the list directory function.
     } else if (strcmp(command, "cd") == 0){
         change_directory(workingDirectory); // TODO: Replace with trimmed argument (Handle relative & absolute paths)
+    } else if (strcmp(command, "whoami") == 0) {
+        who_am_i();
+    } else if (strcmp(command, "hostname") == 0) {
+        hostname();
+    } else if (strcmp(command, "") == 0) {
+        // Do literally nothing.
     } else {
         printf("\033[0;31m");
         printf("✘ nsh:");

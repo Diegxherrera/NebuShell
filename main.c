@@ -24,12 +24,6 @@ int main() {
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
 
     while (!exitSignal) {
-        // Current Directory Check
-        if (getcwd(currentDirectory, sizeof(currentDirectory)) == NULL) {
-            perror("getcwd() error");
-            return EXIT_FAILURE;
-        }
-
         // NebuShell line-by-line formatting
         printf("%s - %s /> ", username, currentDirectory);
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {

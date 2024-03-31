@@ -7,8 +7,10 @@
 #ifndef NEBUSHELL_NEBULA_TOOLS_H
 #define NEBUSHELL_NEBULA_TOOLS_H
 
-bool change_directory(char *path[1024]);
-bool list_directory(char *path[1024]);
-bool print_working_directory(char *path[1024]);
+void change_directory(char path[1024][1024]);
+void list_directory(char *path[1024]);
+void print_working_directory(char *path[1024]);
+void who_am_i();
+void hostname();
 
 #endif //NEBUSHELL_NEBULA_TOOLS_H
