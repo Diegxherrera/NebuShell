@@ -1,16 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include "utils/signal_handler.h"
 #include "utils/parser.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
+char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
 
 int main() {
     char *username = getenv("USER");
     char buffer[1024] = "";
-    char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
 
     setupSignalHandler();
 
@@ -24,7 +23,6 @@ int main() {
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
 
     while (!exitSignal) {
-        // NebuShell line-by-line formatting
         printf("%s - %s /> ", username, currentDirectory);
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             if (feof(stdin)) {
@@ -39,7 +37,7 @@ int main() {
         if (strcmp(buffer, "exit") == 0) {
             break;
         } else {
-            command_tokenizer(buffer);
+            command_tokenizer(buffer, currentDirectory); // Pass currentDirectory to command_tokenizer
         }
     }
 

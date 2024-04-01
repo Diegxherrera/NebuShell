@@ -4,44 +4,37 @@
 #include "parser.h"
 #include "nebula_tools.h"
 
-//
-// Created by diegxherrera on 29/3/24.
-//
+#define MAX_ARGS 1024
 
-void command_tokenizer(char command[1024]) { // TODO: CT should return a characters 2D-array with command + arguments
-    char *workingDirectory[1024];
-    int start = 0;
-    int end = strlen(command) - 1;
+void command_tokenizer(char command[1024], char *currentDirectory) {
+    char *args[MAX_ARGS] = {NULL};
+    int argCount = 0;
 
-    while (command[start] != '\0' && isspace((unsigned char)command[start])) {
-        start++;
+    char *cmd = strtok(command, " \t");
+    if (!cmd) return;
+
+    // Extract arguments
+    char *token;
+    while ((token = strtok(NULL, " \t")) != NULL) {
+        args[argCount++] = token;
+        if (argCount >= MAX_ARGS) break;
     }
 
-    while (end >= start && isspace((unsigned char)command[end])) {
-        end--;
-    }
-
-    for (int i = start; i <= end; i++) {
-        command[i - start] = command[i];
-    }
-
-    if (strcmp(command, "pwd") == 0) {
-        print_working_directory(workingDirectory);
-    } else if (strcmp(command, "ls") == 0) {
-        list_directory(workingDirectory); //TODO: Code the list directory function.
-    } else if (strcmp(command, "cd") == 0){
-        change_directory(workingDirectory); // TODO: Replace with trimmed argument (Handle relative & absolute paths)
-    } else if (strcmp(command, "whoami") == 0) {
+    // Execute the appropriate function based on the command
+    if (strcmp(cmd, "pwd") == 0) {
+        print_working_directory();
+    } else if (strcmp(cmd, "ls") == 0) {
+        list_directory((char **) args[0]);
+    } else if (strcmp(cmd, "cd") == 0) {
+        change_directory(args[0], currentDirectory);
+    } else if (strcmp(cmd, "whoami") == 0) {
         who_am_i();
-    } else if (strcmp(command, "hostname") == 0) {
+    } else if (strcmp(cmd, "hostname") == 0) {
         hostname();
-    } else if (strcmp(command, "") == 0) {
-        // Do literally nothing.
+    } else if (strcmp(cmd, "clear") == 0) {
+        // TODO: Add clear screen function
     } else {
-        printf("\033[0;31m");
-        printf("✘ nsh:");
-        printf(" command not found: ");
-        printf("%s", command);
-        printf("\n\033[0m");
+        // Command not found
+        printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
     }
 }

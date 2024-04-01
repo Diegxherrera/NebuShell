@@ -14,4 +14,5 @@ add_executable(NebuShell
         utils/signal_handler.c
         utils/signal_handler.h
         utils/history.c
-        utils/history.h)
+        utils/history.h
+        main.h)
