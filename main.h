@@ -5,8 +5,9 @@
 #ifndef NEBUSHELL_MAIN_H
 #define NEBUSHELL_MAIN_H
 
-int MAX_DIRECTORY_LENGTH;
-char currentDirectory;
+
+#define MAX_DIRECTORY_LENGTH 1024
+char currentDirectory[MAX_DIRECTORY_LENGTH];
 int main();
 
 #endif //NEBUSHELL_MAIN_H

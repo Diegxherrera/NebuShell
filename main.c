@@ -8,22 +8,21 @@
 char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
 
 int main() {
-    char *username = getenv("USER");
     char buffer[1024] = "";
-
-    setupSignalHandler();
-
     FILE *fp = popen("pwd", "r");
+
     if (fgets(currentDirectory, sizeof(currentDirectory), fp) == NULL) {
-        printf("Failed to read current directory.\n");
+        printf("\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
         pclose(fp);
         return EXIT_FAILURE;
     }
-    pclose(fp);
+
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
+    pclose(fp);
+    setupSignalHandler();
 
     while (!exitSignal) {
-        printf("%s - %s /> ", username, currentDirectory);
+        printf("%s", "NebuShell-0.1$ ");
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             if (feof(stdin)) {
                 printf("\nCtrl-D detected! Exiting...\n");

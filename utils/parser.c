@@ -24,7 +24,7 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
     if (strcmp(cmd, "pwd") == 0) {
         print_working_directory();
     } else if (strcmp(cmd, "ls") == 0) {
-        list_directory((char **) args[0]);
+        list_directory();
     } else if (strcmp(cmd, "cd") == 0) {
         change_directory(args[0], currentDirectory);
     } else if (strcmp(cmd, "whoami") == 0) {
