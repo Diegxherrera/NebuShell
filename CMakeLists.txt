@@ -6,8 +6,8 @@ set(CMAKE_C_STANDARD 11)
 add_executable(NebuShell
         main.c
         utils/parser.c
-        utils/binaries_execution.c
-        utils/binaries_execution.h
+        utils/bin.c
+        utils/bin.h
         utils/parser.h
         utils/nebula_tools.c
         utils/nebula_tools.h

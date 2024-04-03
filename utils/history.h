@@ -1,10 +1,6 @@
 #ifndef NEBUSHELL_HISTORY_H
 #define NEBUSHELL_HISTORY_H
 
-//
-// Created by diegxherrera on 30/3/24.
-//
-
 void init_history();
 
 // Add a command to history
@@ -19,5 +15,4 @@ void save_history();
 // Clean up history on exit
 void cleanup_history();
 
-#endif
-
+#endif // NEBUSHELL_HISTORY_H

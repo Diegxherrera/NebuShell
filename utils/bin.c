@@ -3,10 +3,6 @@
 #include <dirent.h>
 #include <stdbool.h>
 
-//
-// Created by diegxherrera on 29/3/24.
-//
-
 bool findBinary(const char *path, const char *filename) {
     struct dirent *entry;
     bool found = false;

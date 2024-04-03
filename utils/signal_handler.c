@@ -3,10 +3,6 @@
 #include <signal.h>
 #include "signal_handler.h"
 
-//
-// Created by Diego Herrera Redondo on 30/3/24.
-//
-
 volatile bool exitSignal = false;
 
 static void signal_handler(int signal) {

@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 #include "utils/signal_handler.h"
 #include "utils/parser.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
+#define MAX_COMMAND_LENGTH 1024
+
 char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
 
 int main() {
@@ -22,7 +25,7 @@ int main() {
     setupSignalHandler();
 
     while (!exitSignal) {
-        printf("%s", "NebuShell-0.1$ ");
+        printf("%s", "NebuShell-0.2$ ");
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             if (feof(stdin)) {
                 printf("\nCtrl-D detected! Exiting...\n");
@@ -36,7 +39,7 @@ int main() {
         if (strcmp(buffer, "exit") == 0) {
             break;
         } else {
-            command_tokenizer(buffer, currentDirectory); // Pass currentDirectory to command_tokenizer
+            command_tokenizer(buffer, currentDirectory);
         }
     }
 

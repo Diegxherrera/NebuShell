@@ -3,13 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
-#include <fnmatch.h>
 #include "nebula_tools.h"
 #include "../main.h"
-
-//
-// Created by diegxherrera on 30/3/24.
-//
 
 void change_directory(char *path, char *currentDirectory) {
     if (path == NULL || path[0] == '\0') {
@@ -21,35 +16,38 @@ void change_directory(char *path, char *currentDirectory) {
     }
 
     if (chdir(path) == 0) {
-        strncpy(currentDirectory, path, 1024);
-        currentDirectory[1024 - 1] = '\0';
+        if (getcwd(currentDirectory, 1024) == NULL) {
+            perror("getcwd failed");
+        }
     } else {
         perror("change_directory");
     }
 }
 
-void list_directory() { // ls command
+void list_directory(char *currentDirectory) { // ls command
     struct dirent *entry;
-    int count = 0;
-    char *pattern = ".*";
     DIR *dp;
+    int counter = 0;
+
 
     dp = opendir(currentDirectory);
-
     if (dp == NULL) {
-        printf("\033[0;31m✘ nsh: No such file or directory. \n\033[0m");
+        perror("opendir failed");
         return;
     }
 
+    printf("┌ \e[1;93m%s\e[0m\n", currentDirectory);
+
     while ((entry = readdir(dp)) != NULL) {
-        count++;
-        if (fnmatch(pattern, entry->d_name, 0) != 0) {
-            printf("%s\n", entry->d_name);
+        if (entry->d_name[0] != '.') {
+            printf("├ %s\n", entry->d_name);
         }
+        counter++;
     }
 
+    printf("└ \e[1;92m%s\n\e[0m", "Directory listed successfully!");
+
     closedir(dp);
-    printf("\n");
 }
 
 void print_working_directory() { // pwd command
@@ -72,11 +70,20 @@ void who_am_i() { // whoami comaand
 }
 
 void hostname() { // hostname command
-    char hostname[1024];
+    char buffer[1024];
 
-    if (gethostname(hostname, sizeof(hostname)) == 0) {
-        printf("%s\n", hostname);
+    if (gethostname(buffer, sizeof(buffer)) == 0) {
+        printf("%s\n", buffer);
     } else {
         perror("gethostname");
     }
+}
+
+void clear() {
+
+}
+
+int closeShell() {
+    printf("Closing NebuShell.\n");
+    return EXIT_SUCCESS;
 }
