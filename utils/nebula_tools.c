@@ -29,7 +29,6 @@ void list_directory(char *currentDirectory) { // ls command
     DIR *dp;
     int counter = 0;
 
-
     dp = opendir(currentDirectory);
     if (dp == NULL) {
         perror("opendir failed");
