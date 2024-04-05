@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ncurses.h>
 #include "utils/signal_handler.h"
-#include "utils/parser.h"
+#include "internal/parser.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
 #define MAX_COMMAND_LENGTH 1024
