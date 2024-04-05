@@ -40,7 +40,7 @@ void list_directory(char *currentDirectory, const char *args) {
     // Flag to indicate if the argument is recognized
     int recognized = 0;
 
-    if (args == NULL || strcmp(args, "") == 0) {
+    if (args == NULL || strcmp(args, "") == 0 || strcmp(args, "|") == 0) {
         recognized = 1;
         printf("┌ \e[1;93m%s\e[0m\n", currentDirectory);
         while ((entry = readdir(dp)) != NULL) {
