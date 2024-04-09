@@ -9,12 +9,14 @@ add_executable(NebuShell
         internal/bin.c
         internal/bin.h
         internal/parser.h
-        utils/nebula_tools.c
-        utils/nebula_tools.h
-        utils/signal_handler.c
-        utils/signal_handler.h
+        tools/nebula_tools.c
+        tools/nebula_tools.h
+        tools/signal_handler.c
+        tools/signal_handler.h
         internal/history.c
         internal/history.h
-        main.h
         internal/jobs.c
-        internal/jobs.h)
+        internal/jobs.h
+        internal/file_handler.c
+        internal/file_handler.h
+)

@@ -35,6 +35,25 @@ void add_to_history(const char *command) {
     history_pos = current_pos;
 }
 
+void show_history() {
+    FILE *fptr;
+    char path[1024];
+    char *home = getenv("HOME");
+    snprintf(path, sizeof(path), "%s/.nsh_history", home);
+
+    fptr = fopen(path, "w");
+    if (fptr == NULL) {
+        return;
+    }
+
+    char command[MAX_COMMAND_LENGTH];
+    while (fgets(command, MAX_COMMAND_LENGTH, fptr)) {
+        printf("%s", command);
+    }
+
+    fclose(fptr);
+}
+
 const char *get_last_command() {
     if (current_pos == 0 && strlen(history[MAX_HISTORY - 1]) == 0) {
         return NULL;

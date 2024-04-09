@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "parser.h"
-#include "../utils/nebula_tools.h"
+#include "../tools/nebula_tools.h"
 #include "bin.h"
+#include "history.h"
 
 #define MAX_ARGS 1024
 
@@ -57,6 +58,11 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
         echo(args[0]);
     } else if (strcmp(cmd, "test") == 0) {
         runBinary(args[0]);
+    } else if (strcmp(cmd, "history") == 0) {
+        show_history();
+    } else if (strstr(cmd, "(") || strstr(cmd, ")")){
+        char *illegalCharacterPos = strchr(cmd, '|');
+        printf("\033[0;31m✘ nsh: illegal characters: %s\n\033[0m", illegalCharacterPos);
     } else {
         printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
     }

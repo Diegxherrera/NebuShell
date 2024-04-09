@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include "nebula_tools.h"
-#include "../main.h"
 
 void change_directory(char *path, char *currentDirectory) { // cd command
     if (path == NULL || path[0] == '\0') {
@@ -22,7 +21,6 @@ void change_directory(char *path, char *currentDirectory) { // cd command
         perror("change_directory");
     }
 }
-
 
 void list_directory(char *currentDirectory, const char *args) {
     struct dirent *entry;
@@ -84,7 +82,6 @@ void list_directory(char *currentDirectory, const char *args) {
     closedir(dp);
 }
 
-
 void print_working_directory() { // pwd command
     char buffer[1024];
 
@@ -118,15 +115,14 @@ void echo(char *args) {
     if (args == NULL || args[0] == '\0') {
         printf("\n");
     } else {
-        while(*args == '"') args++;
+        while(*args == '"' || *args == '\'') args++;
         end = args + strlen(args) - 1;
-        while(end > args && *end == '"') end--;
+        while(end > args && *end == '"' || *end == '\'') end--;
         *(end + 1) = 0;
 
         printf("%s\n", args);
     }
 }
-
 
 int closeShell() {
     printf("Closing NebuShell.\n");

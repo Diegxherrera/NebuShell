@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
-#include "utils/signal_handler.h"
+#include "tools/signal_handler.h"
 #include "internal/parser.h"
+#include "internal/history.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
 #define MAX_COMMAND_LENGTH 1024
@@ -23,9 +23,10 @@ int main() {
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
     pclose(fp);
     setupSignalHandler();
+    init_history();
 
     while (!exitSignal) {
-        printf("%s", "NebuShell-0.2$ ");
+        printf("%s", "NebuShell-0.3$ ");
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             if (feof(stdin)) {
                 printf("\nCtrl-D detected! Exiting...\n");
@@ -40,6 +41,7 @@ int main() {
             break;
         } else {
             command_tokenizer(buffer, currentDirectory);
+            add_to_history(buffer);
         }
     }
 
