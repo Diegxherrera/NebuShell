@@ -8,9 +8,26 @@
 
 #define MAX_ARGS 1024
 
+bool illegal_characters_check(const char *str, const char *arr[], int arrSize) {
+    for (int i = 0; i < arrSize; i++) {
+        if (strcmp(str, arr[i]) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void command_tokenizer(char command[1024], char *currentDirectory) {
     char *args[MAX_ARGS] = {NULL};
     int argCount = 0;
+    char illegal_characters[33] = {
+            ' ', '\t', '\n', '\r', // Whitespace and control characters
+            '!', '"', '#', '$', '%', '&', // Special symbols used in shell
+            '\'', '(', ')', '*', '+', ',', // More symbols
+            '/', ':', ';', '<', '=', '>', '?', // And even more symbols
+            '@', '[', '\\', ']', '^', '`', // Including some used for special paths or operations
+            '{', '|', '}', '~' // Braces and other common special characters
+    };
 
     // Trim leading and trailing whitespace from the command
     char *trimmedCommand = command;
@@ -22,7 +39,6 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
     // Look for a pipe symbol, ignoring spaces around it
     char *pipePos = strchr(trimmedCommand, '|');
     if (pipePos != NULL) {
-        // Split the command at the pipe, handling spaces
         *pipePos = '\0';
         char *commandBeforePipe = trimmedCommand;
         char *commandAfterPipe = pipePos + 1;
@@ -35,6 +51,7 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
 
     char *cmd = strtok(trimmedCommand, " ");
     if (!cmd) return;
+    add_to_history(cmd); // Add command to history after trimming.
 
     // Extract arguments
     char *token;
@@ -60,7 +77,7 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
         runBinary(args[0]);
     } else if (strcmp(cmd, "history") == 0) {
         show_history();
-    } else if (strstr(cmd, "(") || strstr(cmd, ")")){
+    } else if (false){
         char *illegalCharacterPos = strchr(cmd, '|');
         printf("\033[0;31m✘ nsh: illegal characters: %s\n\033[0m", illegalCharacterPos);
     } else {
