@@ -124,6 +124,12 @@ void echo(char *args) {
     }
 }
 
+void clear() {
+    for (int i = 0; i < 25; i++) {
+        printf("\n");
+    }
+}
+
 int closeShell() {
     printf("Closing NebuShell.\n");
     return EXIT_SUCCESS;
