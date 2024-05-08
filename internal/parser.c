@@ -77,9 +77,8 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
         runBinary(args[0]);
     } else if (strcmp(cmd, "history") == 0) {
         show_history();
-    } else if (false){
-        char *illegalCharacterPos = strchr(cmd, '|');
-        printf("\033[0;31m✘ nsh: illegal characters: %s\n\033[0m", illegalCharacterPos);
+    } else if (strcmp(cmd, "clear") == 0){
+        clear();
     } else {
         printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
     }

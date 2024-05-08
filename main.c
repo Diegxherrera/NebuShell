@@ -37,11 +37,11 @@ int main() {
 
         buffer[strcspn(buffer, "\n")] = 0;
 
+
         if (strcmp(buffer, "exit") == 0) {
             break;
         } else {
             command_tokenizer(buffer, currentDirectory);
-            add_to_history(buffer);
         }
     }
 

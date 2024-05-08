@@ -6,7 +6,7 @@
 #include "nebula_tools.h"
 
 void change_directory(char *path, char *currentDirectory) { // cd command
-    if (path == NULL || path[0] == '\0') {
+    if (path == NULL || path[0] ==  '\0') {
         if (path == NULL) {
             fprintf(stderr, "change_directory: HOME environment variable not set.\n");
             return;
@@ -125,9 +125,7 @@ void echo(char *args) {
 }
 
 void clear() {
-    for (int i = 0; i < 25; i++) {
-        printf("\n");
-    }
+    printf("\033[2J");
 }
 
 int closeShell() {

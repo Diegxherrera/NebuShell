@@ -63,6 +63,10 @@ void add_to_history(const char *command) {
         return;
     }
 
+    if(strcmp(command, " ") == 0 || strcmp(command, "") == 0 || strcmp(command, "  ") == 0) {
+        return;
+    }
+
     // Add the command to the history array
     strncpy(history[current_pos], command, MAX_COMMAND_LENGTH - 1);
     history[current_pos][MAX_COMMAND_LENGTH - 1] = '\0';
