@@ -11,20 +11,31 @@
 char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
 
 int main() {
-    char buffer[1024] = "";
+    char buffer[MAX_COMMAND_LENGTH] = "";
     FILE *fp = popen("pwd", "r");
 
-    if (fgets(currentDirectory, sizeof(currentDirectory), fp) == NULL) {
-        printf("\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
-        pclose(fp);
+    // Check if popen succeeded before using the returned file pointer
+    if (fp == NULL) {
+        fprintf(stderr, "\033[0;31m✘ nsh: Failed to open pipe for reading the current directory: \n\033[0m");
         return EXIT_FAILURE;
     }
 
+    // Check fgets for errors reading the current directory from the pipe
+    if (fgets(currentDirectory, sizeof(currentDirectory), fp) == NULL) {
+        fprintf(stderr, "\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
+        pclose(fp); // Close the pipe before exiting
+        return EXIT_FAILURE;
+    }
+
+    // Remove the trailing newline character
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
-    pclose(fp);
+    pclose(fp); // Always close the pipe to avoid resource leaks
+
+    // Set up the signal handler and initialize the history
     setupSignalHandler();
     init_history();
 
+    // Main command loop
     while (!exitSignal) {
         printf("%s", "NebuShell-0.3$ ");
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
@@ -32,15 +43,17 @@ int main() {
                 printf("\nCtrl-D detected! Exiting...\n");
                 break;
             }
-            continue;
+            continue; // Ignore other errors and retry reading the command
         }
 
+        // Remove the trailing newline from the input buffer
         buffer[strcspn(buffer, "\n")] = 0;
 
-
+        // Exit condition
         if (strcmp(buffer, "exit") == 0) {
             break;
         } else {
+            // Execute the command using command_tokenizer
             command_tokenizer(buffer, currentDirectory);
         }
     }

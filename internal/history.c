@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <ctype.h>
 
-#define MAX_HISTORY 100
+#define MAX_HISTORY 40960
 #define MAX_COMMAND_LENGTH 1024
 
 static char history[MAX_HISTORY][MAX_COMMAND_LENGTH];
@@ -23,6 +24,7 @@ void init_history() {
 
     fptr = fopen(path, "r");
     if (fptr == NULL) {
+        // Create a new history file if none exists
         fptr = fopen(path, "w");
         if (fptr == NULL) {
             perror("Failed to create history file");
@@ -36,6 +38,7 @@ void init_history() {
             return;
         }
     } else {
+        // Read existing commands into history
         while (fgets(history[current_pos], MAX_COMMAND_LENGTH, fptr) && current_pos < MAX_HISTORY) {
             history[current_pos][strcspn(history[current_pos], "\n")] = 0;
             current_pos++;
@@ -63,7 +66,17 @@ void add_to_history(const char *command) {
         return;
     }
 
-    if(strcmp(command, " ") == 0 || strcmp(command, "") == 0 || strcmp(command, "  ") == 0) {
+    // Check if the command is only whitespace or empty
+    int is_whitespace = 1;
+    for (int i = 0; command[i] != '\0'; i++) {
+        if (!isspace((unsigned char)command[i])) {
+            is_whitespace = 0;
+            break;
+        }
+    }
+
+    if (is_whitespace) {
+        fclose(fptr);
         return;
     }
 
@@ -88,10 +101,15 @@ void show_history() {
     FILE *fptr;
     char path[1024];
     char *home = getenv("HOME");
+    if (home == NULL) {
+        fprintf(stderr, "Environment variable HOME is not set.\n");
+        return;
+    }
     snprintf(path, sizeof(path), "%s/.nsh_history", home);
 
     fptr = fopen(path, "r");
     if (fptr == NULL) {
+        perror("Failed to open history file");
         return;
     }
 

@@ -1,20 +1,24 @@
 #include <stdio.h>
-#include <unistd.h>
+#ifdef _WIN32
+    #include <windows.h>
+#elif defined(__APPLE__) && defined(__MACH__)
+    #include <unistd.h>
+#elif defined(__linux__)
+    #include <unistd.h>
+#endif
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
 #include "nebula_tools.h"
 
-void change_directory(char *path, char *currentDirectory) { // cd command
-    if (path == NULL || path[0] ==  '\0') {
-        if (path == NULL) {
-            fprintf(stderr, "change_directory: HOME environment variable not set.\n");
-            return;
-        }
+void change_directory(char *path, char *currentDirectory) {
+    if (path == NULL || path[0] == '\0') {
+        fprintf(stderr, "change_directory: Path not specified or HOME environment variable not set.\n");
+        return;
     }
 
     if (chdir(path) == 0) {
-        if (getcwd(currentDirectory, 1024) == NULL) {
+        if (getcwd(currentDirectory, sizeof(currentDirectory)) == NULL) {
             perror("getcwd failed");
         }
     } else {
@@ -82,25 +86,27 @@ void list_directory(char *currentDirectory, const char *args) {
     closedir(dp);
 }
 
-void print_working_directory() { // pwd command
+void print_working_directory() {
     char buffer[1024];
 
     if (getcwd(buffer, sizeof(buffer)) == NULL) {
         perror("getcwd() error");
-    }
-
-    if (strcmp(buffer, "") != 0 ) {
-        printf("%s\n", getcwd(buffer, 100));
+    } else {
+        printf("%s\n", buffer); // Print once, no need for a second `getcwd`
     }
 }
 
-void who_am_i() { // whoami comaand
+void who_am_i() {
     char *username = getenv("USER");
-    printf("%s\n",username);
+    if (username != NULL) {
+        printf("%s\n", username);
+    } else {
+        printf("USER environment variable not set.\n");
+    }
 }
 
-void hostname() { // hostname command
-    char buffer[1024];
+void hostname() {
+    char buffer[1024] = ""; // Initialize buffer to an empty string
 
     if (gethostname(buffer, sizeof(buffer)) == 0) {
         printf("%s\n", buffer);
@@ -110,14 +116,17 @@ void hostname() { // hostname command
 }
 
 void echo(char *args) {
-    char *end;
-
     if (args == NULL || args[0] == '\0') {
         printf("\n");
     } else {
-        while(*args == '"' || *args == '\'') args++;
-        end = args + strlen(args) - 1;
-        while(end > args && *end == '"' || *end == '\'') end--;
+        // Correct parentheses grouping
+        while (*args == '"' || *args == '\'') {
+            args++;
+        }
+        char *end = args + strlen(args) - 1;
+        while (end > args && (*end == '"' || *end == '\'')) {
+            end--;
+        }
         *(end + 1) = 0;
 
         printf("%s\n", args);
@@ -125,7 +134,11 @@ void echo(char *args) {
 }
 
 void clear() {
-    printf("\033[2J");
+#ifdef _WIN32
+    system("cls");
+#elif defined(__APPLE__) && defined(__MACH__) || defined(__linux__)
+    system("clear");
+#endif
 }
 
 int closeShell() {
