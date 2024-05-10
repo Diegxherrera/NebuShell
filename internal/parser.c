@@ -86,14 +86,14 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
         hostname();
     } else if (strcmp(cmd, "echo") == 0) {
         echo(args[0]);
-    } else if (strcmp(cmd, "test") == 0) {
-        runBinary(args[0]);
     } else if (strcmp(cmd, "history") == 0) {
         show_history();
     } else if (strcmp(cmd, "clear") == 0) {
         clear();
     } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters)) == true) {
         printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
+    } else if (runBinary(cmd)) {
+        runBinary(cmd);
     } else {
         printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
     }

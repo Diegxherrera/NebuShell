@@ -37,7 +37,7 @@ int main() {
 
     // Main command loop
     while (!exitSignal) {
-        printf("%s", "NebuShell-0.3$ ");
+        printf("%s", "NebuShell-0.4$ ");
         if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
             if (feof(stdin)) {
                 printf("\nCtrl-D detected! Exiting...\n");

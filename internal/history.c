@@ -4,8 +4,11 @@
 #include <sys/stat.h>
 #include <ctype.h>
 
-#define MAX_HISTORY 40960
+#define MAX_HISTORY 1024
 #define MAX_COMMAND_LENGTH 1024
+#define MAX_LINES 1024
+#define LINES_TO_REMOVE 100
+#define MAX_LINE_LENGTH 1024
 
 static char history[MAX_HISTORY][MAX_COMMAND_LENGTH];
 static int current_pos = 0;
@@ -46,6 +49,58 @@ void init_history() {
     }
 
     fclose(fptr);
+}
+
+void clean_history(const char *filename) {
+    FILE *input_file = fopen(filename, "r");
+    if (input_file == NULL) {
+        perror("Unable to open the input file");
+        return;
+    }
+
+    // Create a temporary file to store the modified content
+    FILE *temp_file = tmpfile();
+    if (temp_file == NULL) {
+        perror("Unable to create a temporary file");
+        fclose(input_file);
+        return;
+    }
+
+    // Read and count the total number of lines
+    char line[MAX_LINE_LENGTH];
+    int total_lines = 0;
+    while (fgets(line, sizeof(line), input_file) != NULL) {
+        total_lines++;
+    }
+
+    // If the file has more than 1024 lines, remove the first 100
+    if (total_lines > MAX_LINES) {
+        rewind(input_file); // Return to the beginning of the input file
+
+        // Skip the first 100 lines
+        for (int i = 0; i < LINES_TO_REMOVE; i++) {
+            if (fgets(line, sizeof(line), input_file) == NULL) {
+                break;
+            }
+        }
+
+        // Copy the remaining lines to the temporary file
+        while (fgets(line, sizeof(line), input_file) != NULL) {
+            fputs(line, temp_file);
+        }
+
+        // Write the contents of the temporary file back to the original file
+        rewind(temp_file);       // Rewind the temp file to the beginning
+        freopen(filename, "w", input_file); // Reopen input file in write mode
+
+        while (fgets(line, sizeof(line), temp_file) != NULL) {
+            fputs(line, input_file);
+        }
+    }
+
+    // Close the files
+    fclose(input_file);
+    fclose(temp_file);
 }
 
 void add_to_history(const char *command) {
@@ -91,6 +146,7 @@ void add_to_history(const char *command) {
 
     // Close the file
     fclose(fptr);
+    clean_history(path);
 
     // Update position in the circular history array
     current_pos = (current_pos + 1) % MAX_HISTORY;

@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <termios.h>
 
-int runBinary(char *args) {
+int runBinary(char* bin) {
     fflush(stdout);  // Flush stdout to ensure all output is printed before forking
     pid_t pid = fork();
 
@@ -12,7 +12,7 @@ int runBinary(char *args) {
         perror("fork failed");
         return 1;
     } else if (pid == 0) {
-        execlp(args, args, (char *)NULL);
+        execlp(bin, bin, (char *)NULL);
 
         perror("execlp failed");
         _exit(1);
