@@ -188,7 +188,7 @@ const char *get_last_command() {
 
 void handle_key_up() {
     const char *last_command = get_last_command();
-    if (last_command) {
+    if (last_command != NULL) {
         printf("\r%s", last_command);
         fflush(stdout);
     }

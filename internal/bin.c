@@ -2,19 +2,20 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <termios.h>
+#include <stdlib.h>
+#include <limits.h>
 
-int runBinary(char* bin) {
+
+int run_binary(char* bin) {
     fflush(stdout);
     pid_t pid = fork();
 
     if (pid == -1) {
         perror("fork failed");
-        return 1;
+        return EXIT_FAILURE;
     } else if (pid == 0) {
         execlp(bin, bin, (char *)NULL);
 
-        perror("execlp failed");
         _exit(1);
     } else {
         int status;
@@ -25,5 +26,31 @@ int runBinary(char* bin) {
         }
     }
 
-    return 0;
+    return EXIT_SUCCESS;
+}
+
+int is_a_binary(const char *cmd) {
+    if (strchr(cmd, '/')) {
+        // If cmd contains '/', check it directly
+        return access(cmd, X_OK) == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
+
+    char *path_env = getenv("PATH");
+    if (!path_env) return EXIT_FAILURE;
+
+    char *path_dup = strdup(path_env);
+    if (!path_dup) return EXIT_FAILURE;
+
+    char *dir = strtok(path_dup, ":");
+    while (dir) {
+        char fullpath[PATH_MAX];
+        snprintf(fullpath, sizeof(fullpath), "%s/%s", dir, cmd);
+        if (access(fullpath, X_OK) == 0) {
+            free(path_dup);
+            return EXIT_SUCCESS;
+        }
+        dir = strtok(NULL, ":");
+    }
+    free(path_dup);
+    return EXIT_FAILURE;
 }

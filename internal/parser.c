@@ -1,10 +1,12 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "parser.h"
 #include "../tools/nebula_tools.h"
 #include "bin.h"
 #include "history.h"
+#include "jobs.h"
 
 #define MAX_ARGS 1024
 #define MAX_PIPES 1024
@@ -18,7 +20,7 @@ bool illegal_characters_check(const char *str, const char illegal_chars[], int a
     return false;
 }
 
-void command_tokenizer(char command[1024], char *currentDirectory) {
+int command_tokenizer(char command[1024], char *currentDirectory) {
     // Initialize argument pointers and other variables
     char *args[MAX_ARGS] = {NULL};
     int argCount = 0;
@@ -90,6 +92,14 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
             }
         }
 
+
+        char *argv[MAX_ARGS + 2]; // +2 for cmd and NULL terminator
+        argv[0] = cmd;
+        for (int j = 0; j < argCount; j++) {
+            argv[j + 1] = args[j];
+        }
+        argv[argCount + 1] = NULL;
+
         // Call the appropriate function based on the command
         if (strcmp(cmd, "pwd") == 0) {
             print_working_directory();
@@ -111,10 +121,13 @@ void command_tokenizer(char command[1024], char *currentDirectory) {
             help_page(0);
         } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters))) {
             printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
-        } else if (runBinary(cmd)) {
-            runBinary(cmd);
+        } else if (is_a_binary(cmd) == EXIT_SUCCESS) {
+            new_process(cmd, argv);
+            return EXIT_SUCCESS;
         } else {
             printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
+            return EXIT_FAILURE;
         }
     }
+    return EXIT_SUCCESS;
 }
