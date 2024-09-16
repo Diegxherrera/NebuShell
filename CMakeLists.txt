@@ -17,6 +17,6 @@ add_executable(NebuShell
         internal/history.h
         internal/jobs.c
         internal/jobs.h
-        internal/file_handler.c
-        internal/file_handler.h
+        tools/file_handler.c
+        tools/file_handler.h
 )

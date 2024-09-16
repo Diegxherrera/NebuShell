@@ -10,23 +10,30 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include "nebula_tools.h"
+#include "file_handler.h"
 
-void change_directory(char *path, char *currentDirectory) {
+#define MAX_DIRECTORY_LENGTH 1024
+#define HELP_PAGES_DIRECTORY "/any/working/directory"
+
+int change_directory(char *path, char *currentDirectory) {
     if (path == NULL || path[0] == '\0') {
-        fprintf(stderr, "change_directory: Path not specified or HOME environment variable not set.\n");
-        return;
+        perror("✘ nsh: Path not specified. Error Code: 1001\n");
+        return EXIT_FAILURE;
     }
 
     if (chdir(path) == 0) {
-        if (getcwd(currentDirectory, sizeof(currentDirectory)) == NULL) {
-            perror("getcwd failed");
+        if (getcwd(currentDirectory, MAX_DIRECTORY_LENGTH) == NULL) {
+            perror("✘ nsh: Current Directory couldn't be updated: Error Code: 1002");
+            return EXIT_FAILURE;
         }
+        return EXIT_SUCCESS;
     } else {
-        perror("change_directory");
+        perror("✘ nsh: change_directory failed. Error Code: 1003");
+        return EXIT_FAILURE;
     }
 }
 
-void list_directory(char *currentDirectory, const char *args) {
+int list_directory(char *currentDirectory, const char *args) {
     struct dirent *entry;
     DIR *dp = opendir(currentDirectory);
     int directories = 0;
@@ -35,8 +42,8 @@ void list_directory(char *currentDirectory, const char *args) {
     int local_sockets = 0;
 
     if (dp == NULL) {
-        perror("opendir failed");
-        return;
+        perror("✘ nsh: Failed opening directory. Error Code: 2001");
+        return EXIT_FAILURE;
     }
 
     // Flag to indicate if the argument is recognized
@@ -79,47 +86,56 @@ void list_directory(char *currentDirectory, const char *args) {
     // If the argument was not recognized, print a message
     if (!recognized) {
         printf("\033[0;31m✘ nsh: bad option: %s\n\033[0m", args);
+        return EXIT_FAILURE;
     } else {
-        printf("└ \e[1;92m%s\n\e[0m", "Directory listed successfully!");
+        printf("└ \e[1;92m%s\n\e[0m", "✔ nsh: Directory listed successfully!");
+        return EXIT_SUCCESS;
     }
 
     closedir(dp);
+    return EXIT_SUCCESS;
 }
 
-void print_working_directory() {
+int print_working_directory() {
     char buffer[1024];
 
     if (getcwd(buffer, sizeof(buffer)) == NULL) {
-        perror("getcwd() error");
+        perror("✘ nsh: Getcwd failed. Error Code: 4001");
+        return EXIT_FAILURE;
     } else {
-        printf("%s\n", buffer); // Print once, no need for a second `getcwd`
+        printf("%s\n", buffer);
+        return EXIT_SUCCESS;
     }
 }
 
-void who_am_i() {
+int who_am_i() {
     char *username = getenv("USER");
     if (username != NULL) {
         printf("%s\n", username);
+        return EXIT_SUCCESS;
     } else {
-        printf("USER environment variable not set.\n");
+        printf("✘ nsh: User environment variable not set. Error Code: 4001\n");
+        return EXIT_FAILURE;
     }
 }
 
-void hostname() {
-    char buffer[1024] = ""; // Initialize buffer to an empty string
+int hostname() {
+    char buffer[1024] = "";
 
     if (gethostname(buffer, sizeof(buffer)) == 0) {
         printf("%s\n", buffer);
+        return EXIT_SUCCESS;
     } else {
-        perror("gethostname");
+        perror("✘ nsh: Hostname could not be found. Error Code: 5001");
+        return EXIT_FAILURE;
     }
 }
 
-void echo(char *args) {
+int echo(char *args) {
     if (args == NULL || args[0] == '\0') {
         printf("\n");
+        return EXIT_SUCCESS;
     } else {
-        // Correct parentheses grouping
         while (*args == '"' || *args == '\'') {
             args++;
         }
@@ -130,6 +146,7 @@ void echo(char *args) {
         *(end + 1) = 0;
 
         printf("%s\n", args);
+        return EXIT_SUCCESS;
     }
 }
 
@@ -141,7 +158,14 @@ void clear() {
 #endif
 }
 
-int closeShell() {
-    printf("Closing NebuShell.\n");
+int close_shell() {
+    printf("Closing NebuShell...\n");
     return EXIT_SUCCESS;
+}
+
+int help_page(int page) {
+    if (open_file(HELP_PAGES_DIRECTORY, (const char *) 'r') == 0) {
+    return 1;
+    }
+    return 0;
 }

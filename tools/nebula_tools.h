@@ -1,12 +1,13 @@
 #ifndef NEBUSHELL_NEBULA_TOOLS_H
 #define NEBUSHELL_NEBULA_TOOLS_H
 
-void change_directory(char *path, char *currentDirectory);
-void list_directory(char *currentDirectory, const char *args);
-void print_working_directory();
-void echo(char *args);
-void who_am_i();
-void hostname();
-void clear();
+int change_directory(char *path, char *currentDirectory); // Error Codes: 10XX
+int list_directory(char *currentDirectory, const char *args); // Error Codes: 20XX
+int print_working_directory(); // Error Codes: 30XX
+int who_am_i(); // Error Codes: 40XX
+int hostname(); // Error Codes: 50XX
+int echo(char *args); // Error Codes: 60XX
+void clear(); // Error Codes: 70XX
+int help_page(int page); // Error Codes: 80XX
 
 #endif //NEBUSHELL_NEBULA_TOOLS_H

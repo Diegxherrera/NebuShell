@@ -3,3 +3,5 @@
 //
 
 #include "jobs.h"
+
+int ps;

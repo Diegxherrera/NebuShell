@@ -5,7 +5,7 @@
 #include <termios.h>
 
 int runBinary(char* bin) {
-    fflush(stdout);  // Flush stdout to ensure all output is printed before forking
+    fflush(stdout);
     pid_t pid = fork();
 
     if (pid == -1) {
@@ -20,9 +20,7 @@ int runBinary(char* bin) {
         int status;
         waitpid(pid, &status, 0);
 
-        if (WIFEXITED(status)) {
-            printf("Child exited with status %d\n", WEXITSTATUS(status));
-        } else {
+        if (!WIFEXITED(status)) {
             printf("Child terminated abnormally\n");
         }
     }
