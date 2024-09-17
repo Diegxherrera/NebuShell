@@ -1,10 +1,13 @@
 #include <stdio.h>
 #ifdef _WIN32
+    #define HELP_PAGES_DIRECTORY NULL
     #include <windows.h>
 #elif defined(__APPLE__) && defined(__MACH__)
     #include <unistd.h>
+    #define HELP_PAGES_DIRECTORY "/usr/local/share/nsh/help-"
 #elif defined(__linux__)
     #include <unistd.h>
+    #define HELP_PAGES_DIRECTORY "/usr/share/nsh/help"
 #endif
 #include <string.h>
 #include <stdlib.h>
@@ -13,7 +16,8 @@
 #include "file_handler.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
-#define HELP_PAGES_DIRECTORY "/any/working/directory"
+
+extern char **environ;
 
 int change_directory(char *path, char *currentDirectory) {
     if (path == NULL || path[0] == '\0') {
@@ -151,11 +155,7 @@ int echo(char *args) {
 }
 
 void clear() {
-#ifdef _WIN32
-    system("cls");
-#elif defined(__APPLE__) && defined(__MACH__) || defined(__linux__)
-    system("clear");
-#endif
+    // TBA
 }
 
 int close_shell() {
@@ -163,9 +163,19 @@ int close_shell() {
     return EXIT_SUCCESS;
 }
 
-int help_page(int page) {
-    if (open_file(HELP_PAGES_DIRECTORY, (const char *) 'r') == 0) {
-    return 1;
+int environment_variables(const char *args) {
+    if (args == NULL) {
+        char **env = environ;
+        while (*env != NULL) {
+            printf("%s\n", *env);
+            env++;
+        }
+        return EXIT_SUCCESS;
+    } else {
+        return EXIT_FAILURE;
     }
-    return 0;
+}
+
+int where(const char *args) {
+
 }

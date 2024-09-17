@@ -1,0 +1,6 @@
+#ifndef NEBUSHELL_BOOTSTRAP_H
+#define NEBUSHELL_BOOTSTRAP_H
+
+int bootstrap();
+
+#endif //NEBUSHELL_BOOTSTRAP_H

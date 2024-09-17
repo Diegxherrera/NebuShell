@@ -14,12 +14,12 @@ static char history[MAX_HISTORY][MAX_COMMAND_LENGTH];
 static int current_pos = 0;
 static int history_pos = 0;
 
-void init_history() {
+int init_history() {
     FILE *fptr;
     char *home = getenv("HOME");
     if (home == NULL) {
-        fprintf(stderr, "Environment variable HOME is not set.\n");
-        return;
+        perror("Environment variable HOME is not set.\n");
+        return EXIT_FAILURE;
     }
 
     char path[1024];
@@ -31,14 +31,14 @@ void init_history() {
         fptr = fopen(path, "w");
         if (fptr == NULL) {
             perror("Failed to create history file");
-            return;
+            return EXIT_FAILURE;
         }
 
         // Set the file permissions to read and write for the user
         if (chmod(path, S_IRUSR | S_IWUSR) != 0) {
             perror("Failed to set permissions on history file");
             fclose(fptr);
-            return;
+            return EXIT_FAILURE;
         }
     } else {
         // Read existing commands into history
@@ -46,6 +46,7 @@ void init_history() {
             history[current_pos][strcspn(history[current_pos], "\n")] = 0;
             current_pos++;
         }
+        return EXIT_SUCCESS;
     }
 
     fclose(fptr);

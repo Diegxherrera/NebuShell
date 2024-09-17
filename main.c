@@ -4,6 +4,7 @@
 #include "tools/signal_handler.h"
 #include "internal/parser.h"
 #include "internal/history.h"
+#include "tools/bootstrap.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
 #define MAX_COMMAND_LENGTH 1024
@@ -23,7 +24,7 @@ int main() {
     // Check fgets for errors reading the current directory from the pipe
     if (fgets(currentDirectory, sizeof(currentDirectory), fp) == NULL) {
         fprintf(stderr, "\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
-        pclose(fp); // Close the pipe before exiting
+        pclose(fp);
         return EXIT_FAILURE;
     }
 
@@ -31,9 +32,8 @@ int main() {
     currentDirectory[strcspn(currentDirectory, "\n")] = 0;
     pclose(fp); // Always close the pipe to avoid resource leaks
 
-    // Set up the signal handler and initialize the history
-    setupSignalHandler();
-    init_history();
+    // Initialize all the utils needed for the shell to work properly
+    bootstrap();
 
     // Main command loop
     while (!exitSignal) {

@@ -118,7 +118,11 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         } else if (strcmp(cmd, "clear") == 0) {
             clear();
         } else if (strcmp(cmd, "help") == 0) {
-            help_page(0);
+            help_page(argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
+        } else if (strcmp(cmd, "exit") == 0) {
+            close_shell();
+        } else if (strcmp(cmd, "env") == 0) {
+            environment_variables(NULL);
         } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters))) {
             printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
         } else if (is_a_binary(cmd) == EXIT_SUCCESS) {

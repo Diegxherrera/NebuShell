@@ -5,6 +5,6 @@
 
 extern volatile bool exitSignal;
 
-void setupSignalHandler();
+int set_up_signal_handler();
 
 #endif
