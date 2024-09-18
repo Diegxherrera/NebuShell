@@ -7,14 +7,14 @@ volatile bool exitSignal = false;
 
 static void signal_handler(int signal) {
     if (signal == SIGINT) {
-        printf("\nCtrl-C detected! Exiting...\n");
+        printf("\n Ctrl-C detected! Exiting...\n");
         exitSignal = true;
     }
 }
 
-void setupSignalHandler() {
+int set_up_signal_handler() {
     if (signal(SIGINT, signal_handler) == SIG_ERR) {
-        printf("Error: Unable to set signal handler.\n");
-        exit(EXIT_FAILURE);
+        printf("✘ nsh: Unable to set signal handler.\n");
+        return EXIT_FAILURE;
     }
 }

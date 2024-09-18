@@ -1,0 +1,18 @@
+In this help page you'll find a summed up list of builtins of
+the NebuShell. For further information about each command type
+man [command].
+
+Shell built-in commands:
+    - echo: this command write arguments to the standard output
+    - cd (change directory):
+    - ls (list directory): this command list any directory given,
+                           by default it will list the current one.
+    - pwd (print working directory): this command prints the
+                                     current directory.
+    - whoami: this command displays effective user id.
+    - hostname: this command sets or prints name of current host
+                system.
+    - clear: this command clears
+    - exit (close shell):
+    - env (environment variables):
+    - where:

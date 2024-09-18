@@ -4,47 +4,63 @@
 #include "tools/signal_handler.h"
 #include "internal/parser.h"
 #include "internal/history.h"
+#include "tools/bootstrap.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
-#define MAX_COMMAND_LENGTH 1024
+#define MIN_BUFFER_LENGTH 32
 
-char currentDirectory[MAX_DIRECTORY_LENGTH] = "";
+char current_directory[MAX_DIRECTORY_LENGTH] = "";
 
 int main() {
-    char buffer[1024] = "";
+    char *buffer = malloc(sizeof(char) * MIN_BUFFER_LENGTH);
+    size_t buffer_size = MIN_BUFFER_LENGTH;
     FILE *fp = popen("pwd", "r");
 
-    if (fgets(currentDirectory, sizeof(currentDirectory), fp) == NULL) {
-        printf("\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
+    // Check if popen succeeded before using the returned file pointer
+    if (fp == NULL) {
+        fprintf(stderr, "\033[0;31m✘ nsh: Failed to open pipe for reading the current directory: \n\033[0m");
+        return EXIT_FAILURE;
+    }
+
+    // Check fgets for errors reading the current directory from the pipe
+    if (fgets(current_directory, sizeof(current_directory), fp) == NULL) {
+        fprintf(stderr, "\033[0;31m✘ nsh: Failed to read the current directory: \n\033[0m");
         pclose(fp);
         return EXIT_FAILURE;
     }
 
-    currentDirectory[strcspn(currentDirectory, "\n")] = 0;
-    pclose(fp);
-    setupSignalHandler();
-    init_history();
+    // Remove the trailing newline character
+    current_directory[strcspn(current_directory, "\n")] = 0;
+    pclose(fp); // Always close the pipe to avoid resource leaks
 
+    // Initialize all the utils needed for the shell to work properly
+    //bootstrap();
+
+    // Main command loop
     while (!exitSignal) {
-        printf("%s", "NebuShell-0.3$ ");
-        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
-            if (feof(stdin)) {
-                printf("\nCtrl-D detected! Exiting...\n");
-                break;
-            }
-            continue;
+        printf("%s", "NebuShell-0.5$ ");
+        ssize_t characters = getline(&buffer, &buffer_size, stdin);
+        if (characters == -1) {
+            // Handle error or EOF
+            free(buffer);
+            return EXIT_FAILURE;
         }
 
+        // Remove the trailing newline from the input buffer
         buffer[strcspn(buffer, "\n")] = 0;
 
+        // Exit condition
         if (strcmp(buffer, "exit") == 0) {
-            break;
+            // Free memory after memory usage.
+            free(buffer);
+            return EXIT_SUCCESS;
         } else {
-            command_tokenizer(buffer, currentDirectory);
-            add_to_history(buffer);
+            // Execute the command using command_tokenizer
+            command_tokenizer(buffer, current_directory);
         }
     }
 
+    free(buffer);
     printf("Closing NebuShell.\n");
     return EXIT_SUCCESS;
 }
