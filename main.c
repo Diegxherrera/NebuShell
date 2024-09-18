@@ -3,6 +3,7 @@
 #include <string.h>
 #include "tools/signal_handler.h"
 #include "internal/parser.h"
+#include "internal/bootstrap.h"
 
 #define MIN_DIRECTORY_LENGTH 32
 #define MIN_BUFFER_LENGTH 32
@@ -33,7 +34,7 @@ int main() {
     pclose(fp); // Always close the pipe to avoid resource leaks
 
     // Initialize all the utils needed for the shell to work properly
-    //bootstrap();
+    bootstrap();
 
     // Main command loop
     while (!exitSignal) {

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bootstrap.h"
-#include "../internal/history.h"
-#include "signal_handler.h"
+#include "history.h"
+#include "../tools/signal_handler.h"
 
 int bootstrap() {
     int history_result = init_history();

@@ -19,8 +19,8 @@ add_executable(NebuShell
         internal/jobs.h
         tools/file_handler.c
         tools/file_handler.h
-        tools/bootstrap.c
-        tools/bootstrap.h
+        internal/bootstrap.c
+        internal/bootstrap.h
         tools/help.c
         tools/help.h
 )

@@ -23,26 +23,28 @@ int init_history() {
         return EXIT_FAILURE;
     }
 
-    char *path = malloc(MIN_PATH_LENGTH * sizeof(char));
+    char *history_path = malloc(MIN_PATH_LENGTH * sizeof(char));
     size_t path_size = MIN_PATH_LENGTH;
 
-    fptr = fopen(path, "r");
+    snprintf(history_path, MIN_PATH_LENGTH, home, "./.nsh_history");
+
+    fptr = fopen(history_path, "r");
     if (fptr == NULL) {
         // Create a new history file if none exists
-        fptr = fopen(path, "w");
+        fptr = fopen(history_path, "w");
         if (fptr == NULL) {
-            perror("Failed to create history file");
+            perror(" ✘ nsh: Failed to create history file");
 
-            free(path);
+            free(history_path);
             return EXIT_FAILURE;
         }
 
         // Set the file permissions to read and write for the user
-        if (chmod(path, S_IRUSR | S_IWUSR) != 0) {
-            perror("Failed to set permissions on history file");
+        if (chmod(history_path, S_IRUSR | S_IWUSR) != 0) {
+            perror(" ✘ nsh: Failed to set permissions on history file");
             fclose(fptr);
 
-            free(path);
+            free(history_path);
             return EXIT_FAILURE;
         }
     } else {
@@ -52,7 +54,7 @@ int init_history() {
             current_pos++;
         }
 
-        free(path);
+        free(history_path);
         return EXIT_SUCCESS;
     }
 
@@ -62,14 +64,14 @@ int init_history() {
 void clean_history(const char *filename) {
     FILE *input_file = fopen(filename, "r");
     if (input_file == NULL) {
-        perror("Unable to open the input file");
+        perror(" ✘ nsh: Unable to open the input file");
         return;
     }
 
     // Create a temporary file to store the modified content
     FILE *temp_file = tmpfile();
     if (temp_file == NULL) {
-        perror("Unable to create a temporary file");
+        perror(" ✘ nsh: Unable to create a temporary file");
         fclose(input_file);
         return;
     }
@@ -103,7 +105,7 @@ void clean_history(const char *filename) {
         fclose(input_file);
         input_file = fopen(filename, "w");
         if (input_file == NULL) {
-            perror("Unable to reopen the file for writing");
+            perror(" ✘ nsh: Unable to reopen the file for writing");
             fclose(temp_file);
             return;
         }
@@ -122,7 +124,7 @@ void add_to_history(const char *command) {
     FILE *fptr;
     char *home = getenv("HOME");
     if (home == NULL) {
-        fprintf(stderr, "Environment variable HOME is not set.\n");
+        fprintf(stderr, " ✘ nsh: Environment variable HOME is not set.\n");
         return;
     }
 
@@ -132,7 +134,7 @@ void add_to_history(const char *command) {
     // Open the history file in append mode
     fptr = fopen(path, "a");
     if (fptr == NULL) {
-        perror("Failed to open history file");
+        perror(" ✘ nsh: Failed to open history file");
         return;
     }
 
@@ -156,7 +158,7 @@ void add_to_history(const char *command) {
 
     // Write the command to the file
     if (fprintf(fptr, "%s\n", command) < 0) {
-        perror("Failed to write to history file");
+        perror(" ✘ nsh: Failed to write to history file");
     }
 
     // Close the file
@@ -173,13 +175,13 @@ int show_history(char *args) {
     size_t path_length = MIN_PATH_LENGTH;
     char *path = malloc(path_length * sizeof(char));
     if (path == NULL) {
-        fprintf(stderr, "Memory allocation failed for path.\n");
+        fprintf(stderr, " ✘ nsh: Memory allocation failed for path.\n");
         return EXIT_FAILURE;
     }
 
     char *home = getenv("HOME");
     if (home == NULL) {
-        fprintf(stderr, "Environment variable HOME is not set.\n");
+        fprintf(stderr, " ✘ nsh: Environment variable HOME is not set.\n");
         free(path); // Don't forget to free the memory on failure
         return EXIT_FAILURE;
     }
@@ -191,7 +193,7 @@ int show_history(char *args) {
     if (required_length > path_length) {
         char *new_path = realloc(path, required_length * sizeof(char));
         if (new_path == NULL) {
-            fprintf(stderr, "Memory reallocation failed for path.\n");
+            fprintf(stderr, " ✘ nsh: Memory reallocation failed for path.\n");
             free(path); // Free the old path before returning
             return EXIT_FAILURE;
         }
@@ -204,7 +206,7 @@ int show_history(char *args) {
 
     fptr = fopen(path, "r");
     if (fptr == NULL) {
-        perror("Failed to open history file");
+        perror(" ✘ nsh: Failed to open history file");
         free(path); // Free the memory before returning
         return EXIT_FAILURE;
     }
