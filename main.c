@@ -3,18 +3,17 @@
 #include <string.h>
 #include "tools/signal_handler.h"
 #include "internal/parser.h"
-#include "internal/history.h"
-#include "tools/bootstrap.h"
 
-#define MAX_DIRECTORY_LENGTH 1024
+#define MIN_DIRECTORY_LENGTH 32
 #define MIN_BUFFER_LENGTH 32
 
-char current_directory[MAX_DIRECTORY_LENGTH] = "";
-
 int main() {
+    // Dynamically allocating buffer & current directory to gain efficiency
     char *buffer = malloc(sizeof(char) * MIN_BUFFER_LENGTH);
     size_t buffer_size = MIN_BUFFER_LENGTH;
     FILE *fp = popen("pwd", "r");
+    char *current_directory = malloc(MIN_BUFFER_LENGTH * sizeof(char));
+    size_t current_directory_length = MIN_BUFFER_LENGTH;
 
     // Check if popen succeeded before using the returned file pointer
     if (fp == NULL) {
@@ -57,10 +56,10 @@ int main() {
         } else {
             // Execute the command using command_tokenizer
             command_tokenizer(buffer, current_directory);
+            free(buffer);
         }
     }
 
-    free(buffer);
     printf("Closing NebuShell.\n");
     return EXIT_SUCCESS;
 }

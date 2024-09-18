@@ -20,8 +20,10 @@ bool illegal_characters_check(const char *str, const char illegal_chars[], int a
     return false;
 }
 
-int command_tokenizer(char command[1024], char *currentDirectory) {
+int command_tokenizer(char *command, char *currentDirectory) {
     // Initialize argument pointers and other variables
+    add_to_history(command);
+    
     char *args[MAX_ARGS] = {NULL};
     int argCount = 0;
     char illegal_characters[] = {
@@ -75,8 +77,6 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         char *cmd = strtok(currentCommand, " ");
         if (!cmd) continue;
 
-        add_to_history(cmd); // Add the command to history after trimming
-
         // Reset arguments for the current command
         argCount = 0;
         memset(args, 0, sizeof(args));
@@ -91,7 +91,6 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
                 break;
             }
         }
-
 
         char *argv[MAX_ARGS + 2]; // +2 for cmd and NULL terminator
         argv[0] = cmd;

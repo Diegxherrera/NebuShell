@@ -40,7 +40,7 @@ int change_directory(char *path, char *currentDirectory) {
 
 int list_directory(char *currentDirectory, const char *args) {
     struct dirent *entry;
-    DIR *dp = opendir(currentDirectory);
+    DIR *dp = NULL;
     int directories = 0;
     int regular_files = 0;
     int symbolic_links = 0;
@@ -52,120 +52,117 @@ int list_directory(char *currentDirectory, const char *args) {
     int option_f = 0; // Example flag for '-f' option
     // Add more option flags as needed
 
-    // Array to store paths provided by the user (Dynamically allocated)
-    char **paths = malloc(MIN_PATH_LENGTH * sizeof(char *));
+    // Allocate memory for the path string (Dynamically allocated)
+    char *path = malloc(MIN_PATH_LENGTH * sizeof(char));
     size_t path_size = MIN_PATH_LENGTH;
-    int path_count = 0;
 
     // Memory allocation error
-    if (paths == NULL) {
-        perror("✘ nsh: Internal error. Memory allocation failed for paths.\n");
+    if (path == NULL) {
+        perror("✘ nsh: Internal error. Memory allocation failed for path.\n");
         return EXIT_FAILURE;
     }
 
-    // Add the first path (currentDirectory) to the array of paths if none are specified
-    if (path_count == 0) {
-        paths[path_count++] = strdup(currentDirectory);  // strdup allocates memory and copies the string
-    }
-
-    // Copy args to a modifiable buffer
-    char args_copy[MAX_ARGS_LENGTH];
-    if (args != NULL && args[0] != '\0') {
-        strncpy(args_copy, args, sizeof(args_copy));
-        args_copy[sizeof(args_copy) - 1] = '\0';
+    // If no args are given, use the currentDirectory as the path
+    if (args == NULL || args[0] == '\0') {
+        snprintf(path, path_size, "%s", currentDirectory);
     } else {
-        args_copy[0] = '\0';
-    }
+        // Copy args to a modifiable buffer
+        char args_copy[MAX_ARGS_LENGTH];
+        strncpy(args_copy, args, sizeof(args_copy));
+        args_copy[sizeof(args_copy) - 1] = '\0'; // Ensure null-termination
 
-    // Tokenize args
-    char *token = strtok(args_copy, " ");
-    while (token != NULL) {
-        if (token[0] == '-') {
-            // Process options
-            for (int i = 1; token[i] != '\0'; i++) {
-                switch (token[i]) {
-                    case 'l':
-                        option_l = 1;
-                        break;
-                    case 'a':
-                        option_a = 1;
-                        break;
-                    case 'f':
-                        option_f = 1;
-                        break;
-                    default:
-                        printf("\033[0;31m✘ nsh: invalid option -- '%c'\n\033[0m", token[i]);
-                        free(paths);
+        // Tokenize args to extract options and the path
+        char *token = strtok(args_copy, " ");
+        while (token != NULL) {
+            if (token[0] == '-') {
+                // Process options
+                for (int i = 1; token[i] != '\0'; i++) {
+                    switch (token[i]) {
+                        case 'l':
+                            option_l = 1;
+                            break;
+                        case 'a':
+                            option_a = 1;
+                            break;
+                        case 'f':
+                            option_f = 1;
+                            break;
+                        default:
+                            printf("\033[0;31m✘ nsh: invalid option -- '%c'\n\033[0m", token[i]);
+                            free(path);
+                            return EXIT_FAILURE;
+                    }
+                }
+            } else {
+                // Assume it's the path given by the user
+                size_t token_length = strlen(token);
+                if (token_length >= path_size) {
+                    // Reallocate the path if it's not large enough
+                    char *new_path = realloc(path, (token_length + 1) * sizeof(char));
+                    if (new_path == NULL) {
+                        perror("✘ nsh: Memory reallocation failed.\n");
+                        free(path);
                         return EXIT_FAILURE;
+                    }
+                    path = new_path;
+                    path_size = token_length + 1;
                 }
+                snprintf(path, path_size, "%s", token);
             }
-        } else {
-            // Assume it's a path
-            if (path_count >= path_size) {
-                path_size *= 2;  // Double the size of the paths array if it's full
-                char **new_paths = realloc(paths, path_size * sizeof(char *));
-                if (new_paths == NULL) {
-                    perror("✘ nsh: Memory reallocation failed.\n");
-                    free(paths);
-                    return EXIT_FAILURE;
-                }
-                paths = new_paths;
-            }
-            paths[path_count++] = strdup(token);
+            token = strtok(NULL, " ");
         }
-        token = strtok(NULL, " ");
     }
 
-    // Process each path
-    for (int p = 0; p < path_count; p++) {
-        dp = opendir(paths[p]);  // Correctly pass individual paths
-        if (dp == NULL) {
-            fprintf(stderr, "✘ nsh: Failed opening directory '%s'\n", paths[p]);
-            free(paths[p]); // Free the individual path string
+    // Open the directory with the given path
+    dp = opendir(path);
+    if (dp == NULL) {
+        fprintf(stderr, "✘ nsh: Failed opening directory '%s'\n", path);
+        free(path); // Free the dynamically allocated path
+        return EXIT_FAILURE;
+    }
+
+    // Print the directory contents
+    printf("┌ \e[1;93m%s\e[0m\n", path);
+    while ((entry = readdir(dp)) != NULL) {
+        // Skip entries starting with '.' unless option_a is set
+        if (!option_a && entry->d_name[0] == '.') {
             continue;
         }
 
-        printf("┌ \e[1;93m%s\e[0m\n", paths[p]);
-        while ((entry = readdir(dp)) != NULL) {
-            // Skip entries starting with '.' unless option_a is set
-            if (!option_a && entry->d_name[0] == '.') {
-                continue;
+        if (option_l) {
+            // Detailed listing
+            switch (entry->d_type) {
+                case DT_DIR:
+                    printf("├ \e[1;34m%s\n\e[0m", entry->d_name); // Directory
+                    directories++;
+                    break;
+                case DT_REG:
+                    printf("├ %s\n", entry->d_name); // Regular file
+                    regular_files++;
+                    break;
+                case DT_LNK:
+                    printf("├ \e[1;36m%s\n\e[0m", entry->d_name); // Symbolic Link
+                    symbolic_links++;
+                    break;
+                case DT_SOCK:
+                    printf("├ \e[1;38m%s\n\e[0m", entry->d_name); // Local Domain Socket
+                    local_sockets++;
+                    break;
+                default:
+                    printf("├ %s\n", entry->d_name); // Other types
+                    break;
             }
-
-            if (option_l) {
-                // Detailed listing
-                switch (entry->d_type) {
-                    case DT_DIR:
-                        printf("├ \e[1;34m%s\n\e[0m", entry->d_name); // Directory
-                        directories++;
-                        break;
-                    case DT_REG:
-                        printf("├ %s\n", entry->d_name); // Regular file
-                        regular_files++;
-                        break;
-                    case DT_LNK:
-                        printf("├ \e[1;36m%s\n\e[0m", entry->d_name); // Symbolic Link
-                        symbolic_links++;
-                        break;
-                    case DT_SOCK:
-                        printf("├ \e[1;38m%s\n\e[0m", entry->d_name); // Local Domain Socket
-                        local_sockets++;
-                        break;
-                    default:
-                        printf("├ %s\n", entry->d_name); // Other types
-                        break;
-                }
-            } else {
-                // Simple listing
-                printf("├ %s\n", entry->d_name);
-            }
+        } else {
+            // Simple listing
+            printf("├ %s\n", entry->d_name);
         }
-        closedir(dp);
-        free(paths[p]);  // Free the individual path string after processing
-        printf("└ \e[1;92m%s\n\e[0m", "✔ nsh: Directory listed successfully!");
     }
+    closedir(dp);
 
-    free(paths);  // Free the array of pointers after processing all paths
+    printf("└ \e[1;92m%s\n\e[0m", "✔ nsh: Directory listed successfully!");
+
+    // Free the dynamically allocated path
+    free(path);
     return EXIT_SUCCESS;
 }
 

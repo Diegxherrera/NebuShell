@@ -170,17 +170,24 @@ void add_to_history(const char *command) {
 
 int show_history(char *args) {
     FILE *fptr;
-    char *path = malloc(MIN_PATH_LENGTH * sizeof (char));
     size_t path_length = MIN_PATH_LENGTH;
-    char command[MAX_COMMAND_LENGTH];
+    char *path = malloc(path_length * sizeof(char));
+    if (path == NULL) {
+        fprintf(stderr, "Memory allocation failed for path.\n");
+        return EXIT_FAILURE;
+    }
 
     char *home = getenv("HOME");
     if (home == NULL) {
         fprintf(stderr, "Environment variable HOME is not set.\n");
+        free(path); // Don't forget to free the memory on failure
         return EXIT_FAILURE;
     }
 
+    // Calculate required length for the path
     int required_length = snprintf(NULL, 0, "%s/.nsh_history", home) + 1; // +1 for the null-terminator
+
+    // Resize if the required length is greater than the initial allocation
     if (required_length > path_length) {
         char *new_path = realloc(path, required_length * sizeof(char));
         if (new_path == NULL) {
@@ -198,20 +205,18 @@ int show_history(char *args) {
     fptr = fopen(path, "r");
     if (fptr == NULL) {
         perror("Failed to open history file");
+        free(path); // Free the memory before returning
         return EXIT_FAILURE;
     }
 
-    if (strcmp(args, NULL) == 0) {
-        while (fgets(command, MAX_COMMAND_LENGTH, fptr)) {
-            printf("%s", command);
-        }
-    } else if (strcmp(args, "clean") == 0) {
-        clean_history(path);
-    } else if (strcmp(args, "-f") == 0) {
-        // Do something else
+    char command[MAX_COMMAND_LENGTH];
+    while (fgets(command, MAX_COMMAND_LENGTH, fptr)) {
+        printf("%s", command);
     }
 
+    // Clean up
     free(path);
     fclose(fptr);
+
     return EXIT_SUCCESS;
 }
