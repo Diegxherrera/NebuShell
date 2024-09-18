@@ -21,12 +21,12 @@ int help_page(char *option, char *command) {
         // No option provided, display the default help page
         snprintf(help_page_path, sizeof(help_page_path), "%sdefault", HELP_PAGES_DIRECTORY);
     } else if (strcmp(option, "-p") == 0) {
-        if (page == NULL || strcmp(page, "") == 0) {
+        if (command == NULL || strcmp(command, "") == 0) {
             fprintf(stderr, "✘ nsh: No page specified after -p option.\n");
             return EXIT_FAILURE;
         }
 
-        snprintf(help_page_path, sizeof(help_page_path), "%s%s", HELP_PAGES_DIRECTORY, page);
+        snprintf(help_page_path, sizeof(help_page_path), "%s%s", HELP_PAGES_DIRECTORY, command);
     } else {
         // Option provided is actually the command name
         snprintf(help_page_path, sizeof(help_page_path), "%s%s", HELP_PAGES_DIRECTORY, option);

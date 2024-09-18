@@ -1,0 +1,12 @@
+Welcome to the NebuShell help page. In these documents you'll find everything you
+need to know before you type it somewhere in the internet to troubleshoot or
+just research a bit more about this project. 
+
+To access each page just write help -p [page]
+
+Directory:
+    - 1: built-in commands (e.g: echo, env, whoami, etc...)
+    - 2: illegal characters
+    - 3: error codes
+    - 4:
+    - 5: future & credits

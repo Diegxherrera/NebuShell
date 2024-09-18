@@ -28,7 +28,7 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
             ' ', '\t', '\n', '\r', // Whitespace and control characters
             '!', '"', '#', '$', '%', '&', // Special symbols used in shell
             '\'', '(', ')', '*', '+', ',', // More symbols
-            '/', ':', ';', '<', '=', '>', '?', // And even more symbols
+            '/', ':', ';', '=', '?', // And even more symbols
             '@', '[', '\\', ']', '^', '`', // Special paths or operations
             '{', '|', '}', '~' // Braces and common special characters
     };
@@ -86,7 +86,7 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         while ((token = strtok(NULL, " ")) != NULL) {
             if (argCount < MAX_ARGS - 1) {
                 args[argCount++] = token;
-            } else {
+            } else if (argCount >= MAX_ARGS){
                 printf("\033[0;31m✘ nsh: Too many arguments. Only the first %d will be used.\n\033[0m", MAX_ARGS);
                 break;
             }
@@ -104,7 +104,7 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         if (strcmp(cmd, "pwd") == 0) {
             print_working_directory();
         } else if (strcmp(cmd, "ls") == 0) {
-            list_directory(currentDirectory, args[0] ? args[0] : "");
+            list_directory(currentDirectory, argCount > 0 ? args[0] : NULL);
         } else if (strcmp(cmd, "cd") == 0) {
             change_directory(args[0], currentDirectory);
         } else if (strcmp(cmd, "whoami") == 0) {
@@ -112,9 +112,9 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         } else if (strcmp(cmd, "hostname") == 0) {
             hostname();
         } else if (strcmp(cmd, "echo") == 0) {
-            echo(args[0]);
+            echo(argCount > 0 ? args[0] : NULL);
         } else if (strcmp(cmd, "history") == 0) {
-            show_history();
+            show_history(argCount > 0 ? args[0] : NULL);
         } else if (strcmp(cmd, "clear") == 0) {
             clear();
         } else if (strcmp(cmd, "help") == 0) {
@@ -126,7 +126,10 @@ int command_tokenizer(char command[1024], char *currentDirectory) {
         } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters))) {
             printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
         } else if (is_a_binary(cmd) == EXIT_SUCCESS) {
-            new_process(cmd, argv);
+            if (new_process(cmd, argv) != 0) {
+                return EXIT_FAILURE;
+            }
+
             return EXIT_SUCCESS;
         } else {
             printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);

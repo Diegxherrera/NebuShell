@@ -14,7 +14,10 @@ int run_binary(char* bin) {
         perror("fork failed");
         return EXIT_FAILURE;
     } else if (pid == 0) {
-        execlp(bin, bin, (char *)NULL);
+        if (execlp(bin, bin, (char *)NULL) == -1) {
+            perror("✘ nsh: Execution of the binary failed");
+            return EXIT_FAILURE;
+        }
 
         _exit(1);
     } else {
@@ -22,7 +25,7 @@ int run_binary(char* bin) {
         waitpid(pid, &status, 0);
 
         if (!WIFEXITED(status)) {
-            printf("Child terminated abnormally\n");
+            printf("✘ nsh: Child terminated abnormally\n");
         }
     }
 
