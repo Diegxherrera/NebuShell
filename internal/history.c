@@ -23,10 +23,10 @@ int init_history() {
         return EXIT_FAILURE;
     }
 
-    char *history_path = malloc(MIN_PATH_LENGTH * sizeof(char));
+    char *history_path = malloc(MIN_PATH_LENGTH * sizeof(char) + 1);
     size_t path_size = MIN_PATH_LENGTH;
 
-    snprintf(history_path, MIN_PATH_LENGTH, home, "./.nsh_history");
+    snprintf(history_path, path_size, home, "./.nsh_history");
 
     fptr = fopen(history_path, "r");
     if (fptr == NULL) {
@@ -35,7 +35,9 @@ int init_history() {
         if (fptr == NULL) {
             perror(" ✘ nsh: Failed to create history file");
 
-            free(history_path);
+            if (history_path != NULL) {
+                free(history_path);
+            }
             return EXIT_FAILURE;
         }
 
@@ -44,7 +46,9 @@ int init_history() {
             perror(" ✘ nsh: Failed to set permissions on history file");
             fclose(fptr);
 
-            free(history_path);
+            if (history_path != NULL){
+                free(history_path);
+            }
             return EXIT_FAILURE;
         }
     } else {
@@ -53,12 +57,11 @@ int init_history() {
             history[current_pos][strcspn(history[current_pos], "\n")] = 0;
             current_pos++;
         }
-
-        free(history_path);
-        return EXIT_SUCCESS;
     }
 
+    free(history_path);
     fclose(fptr);
+    return EXIT_SUCCESS;
 }
 
 void clean_history(const char *filename) {
@@ -170,10 +173,10 @@ void add_to_history(const char *command) {
     history_pos = current_pos;
 }
 
-int show_history(char *args) {
+int show_history() {
     FILE *fptr;
     size_t path_length = MIN_PATH_LENGTH;
-    char *path = malloc(path_length * sizeof(char));
+    char *path = malloc(path_length * sizeof(char) + 1);
     if (path == NULL) {
         fprintf(stderr, " ✘ nsh: Memory allocation failed for path.\n");
         return EXIT_FAILURE;
@@ -220,5 +223,18 @@ int show_history(char *args) {
     free(path);
     fclose(fptr);
 
+    return EXIT_SUCCESS;
+}
+
+int handle_history(char *cmd, char *arg1, char *arg2) {
+    if (strcmp(cmd, "history") == 0) {
+        if (show_history() != 0) {
+            return EXIT_FAILURE;
+        }
+    } else if (strcmp(cmd, "history -d *") == 0) {
+
+
+        return EXIT_SUCCESS;
+    }
     return EXIT_SUCCESS;
 }

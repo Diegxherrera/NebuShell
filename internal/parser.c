@@ -7,9 +7,12 @@
 #include "bin.h"
 #include "history.h"
 #include "jobs.h"
+#include "../tools/alias.h"
 
 #define MAX_ARGS 1024
 #define MAX_PIPES 1024
+
+int ps_count = 0;
 
 bool illegal_characters_check(const char *str, const char illegal_chars[], int arrSize) {
     for (int i = 0; i < arrSize; i++) {
@@ -23,7 +26,10 @@ bool illegal_characters_check(const char *str, const char illegal_chars[], int a
 int command_tokenizer(char *command, char *currentDirectory) {
     // Initialize argument pointers and other variables
     add_to_history(command);
-    
+    if (ps_count > 3 && ps_count < 4) {
+        printf("Bienvenidos a Nuevo PS, una agencia renovada.");
+    }
+
     char *args[MAX_ARGS] = {NULL};
     int argCount = 0;
     char illegal_characters[] = {
@@ -113,7 +119,7 @@ int command_tokenizer(char *command, char *currentDirectory) {
         } else if (strcmp(cmd, "echo") == 0) {
             echo(argCount > 0 ? args[0] : NULL);
         } else if (strcmp(cmd, "history") == 0) {
-            show_history(argCount > 0 ? args[0] : NULL);
+            handle_history(cmd, argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
         } else if (strcmp(cmd, "clear") == 0) {
             clear();
         } else if (strcmp(cmd, "help") == 0) {
@@ -122,6 +128,8 @@ int command_tokenizer(char *command, char *currentDirectory) {
             close_shell();
         } else if (strcmp(cmd, "env") == 0) {
             environment_variables(NULL);
+        } else if (strcmp(cmd, "alias") == 0 || strcmp(cmd, "unalias") == 0){
+            handle_alias(argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
         } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters))) {
             printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
         } else if (is_a_binary(cmd) == EXIT_SUCCESS) {

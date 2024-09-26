@@ -23,4 +23,6 @@ add_executable(NebuShell
         internal/bootstrap.h
         tools/help.c
         tools/help.h
+        tools/alias.c
+        tools/alias.h
 )

@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include "nebula_tools.h"
+#include "alias.h"
 
 #define MAX_DIRECTORY_LENGTH 1024
 #define MAX_ARGS_LENGTH 1024
@@ -21,6 +22,7 @@
 extern char **environ;
 
 int change_directory(char *path, char *currentDirectory) {
+    char *home_path = getenv("HOME");
     if (path == NULL || path[0] == '\0') {
         perror("✘ nsh: Path not specified. Error Code: 1001\n");
         return EXIT_FAILURE;
@@ -31,8 +33,21 @@ int change_directory(char *path, char *currentDirectory) {
             perror("✘ nsh: Current Directory couldn't be updated: Error Code: 1002");
             return EXIT_FAILURE;
         }
+
+        if (strcmp(path, "~") == 0) {
+            if (chdir(home_path) == 0) {
+                return EXIT_SUCCESS;
+            } else {
+                perror("✘ nsh: Home directory couldn't be updated: Error Code: 1002");
+                return EXIT_FAILURE;
+            }
+        }
         return EXIT_SUCCESS;
-    } else {
+    } else if (chdir(find_alias(path)) == 0) {
+
+    }
+
+    else {
         perror("✘ nsh: Change directory failed. Error Code: 1003");
         return EXIT_FAILURE;
     }
@@ -53,7 +68,7 @@ int list_directory(char *currentDirectory, const char *args) {
     // Add more option flags as needed
 
     // Allocate memory for the path string (Dynamically allocated)
-    char *path = malloc(MIN_PATH_LENGTH * sizeof(char));
+    char *path = malloc(MIN_PATH_LENGTH * sizeof(char) + 1);
     size_t path_size = MIN_PATH_LENGTH;
 
     // Memory allocation error

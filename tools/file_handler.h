@@ -5,6 +5,6 @@
 #ifndef NEBUSHELL_FILE_HANDLER_H
 #define NEBUSHELL_FILE_HANDLER_H
 
-int open_file(char *filename, const char *mode);
+int open_file(char *filename, const char *mode, char *optional_input);
 
 #endif //NEBUSHELL_FILE_HANDLER_H

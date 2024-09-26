@@ -5,15 +5,14 @@
 #include "internal/parser.h"
 #include "internal/bootstrap.h"
 
-#define MIN_DIRECTORY_LENGTH 32
 #define MIN_BUFFER_LENGTH 32
 
 int main() {
     // Dynamically allocating buffer & current directory to gain efficiency
-    char *buffer = malloc(sizeof(char) * MIN_BUFFER_LENGTH);
+    char *buffer = malloc(sizeof(char) * MIN_BUFFER_LENGTH + 1);
     size_t buffer_size = MIN_BUFFER_LENGTH;
     FILE *fp = popen("pwd", "r");
-    char *current_directory = malloc(MIN_BUFFER_LENGTH * sizeof(char));
+    char *current_directory = malloc(MIN_BUFFER_LENGTH * sizeof(char) + 1);
     size_t current_directory_length = MIN_BUFFER_LENGTH;
 
     // Check if popen succeeded before using the returned file pointer
@@ -38,7 +37,7 @@ int main() {
 
     // Main command loop
     while (!exitSignal) {
-        printf("%s", "NebuShell-0.5$ ");
+        printf("%s", "NebuShell~0.51$ ");
         ssize_t characters = getline(&buffer, &buffer_size, stdin);
         if (characters == -1) {
             // Handle error or EOF
