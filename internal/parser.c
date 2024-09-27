@@ -109,7 +109,7 @@ int command_tokenizer(char *command, char *currentDirectory) {
         if (strcmp(cmd, "pwd") == 0) {
             print_working_directory();
         } else if (strcmp(cmd, "ls") == 0) {
-            list_directory(currentDirectory, argCount > 0 ? args[0] : NULL);
+            list_directory(currentDirectory, argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
         } else if (strcmp(cmd, "cd") == 0) {
             change_directory(args[0], currentDirectory);
         } else if (strcmp(cmd, "whoami") == 0) {

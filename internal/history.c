@@ -26,7 +26,7 @@ int init_history() {
     char *history_path = malloc(MIN_PATH_LENGTH * sizeof(char) + 1);
     size_t path_size = MIN_PATH_LENGTH;
 
-    snprintf(history_path, path_size, home, "./.nsh_history");
+    snprintf(history_path, path_size, "%s/.nsh_history", home);
 
     fptr = fopen(history_path, "r");
     if (fptr == NULL) {

@@ -53,7 +53,7 @@ int change_directory(char *path, char *currentDirectory) {
     }
 }
 
-int list_directory(char *currentDirectory, const char *args) {
+int list_directory(char *currentDirectory, const char *args, const char *optional_args) {
     struct dirent *entry;
     DIR *dp = NULL;
     int directories = 0;

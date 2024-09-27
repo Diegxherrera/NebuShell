@@ -51,15 +51,13 @@ int main() {
         // Exit condition
         if (strcmp(buffer, "exit") == 0) {
             // Free memory after memory usage.
-            free(buffer);
             return EXIT_SUCCESS;
         } else {
             // Execute the command using command_tokenizer
             command_tokenizer(buffer, current_directory);
-            free(buffer);
         }
     }
-
+    free(buffer);
     printf("Closing NebuShell.\n");
     return EXIT_SUCCESS;
 }
