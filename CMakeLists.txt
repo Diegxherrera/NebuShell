@@ -25,4 +25,7 @@ add_executable(NebuShell
         tools/help.h
         tools/alias.c
         tools/alias.h
+        tools/list_directory.c
+        tools/list_directory.h
+        constants.h
 )

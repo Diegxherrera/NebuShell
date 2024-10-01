@@ -47,4 +47,5 @@ int help_page(char *option, char *command) {
 }
 
 int init_help_pages() {
+
 }

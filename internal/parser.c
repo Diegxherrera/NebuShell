@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "parser.h"
 #include "../tools/nebula_tools.h"
 #include "bin.h"
@@ -9,10 +10,39 @@
 #include "jobs.h"
 #include "../tools/alias.h"
 
-#define MAX_ARGS 1024
-#define MAX_PIPES 1024
+void parse_options(int argc, char *argv[], Options *opts, char **directory) {
+    // Initialize options to 0 (off)
+    opts->option_l = 0;
+    opts->option_a = 0;
+    opts->option_f = 0;
+    *directory = NULL;
 
-int ps_count = 0;
+    // Loop through arguments
+    for (int i = 1; i < argc; i++) {
+        if (argv[i][0] == '-') {
+            // Process options starting with '-'
+            for (int j = 1; argv[i][j] != '\0'; j++) {
+                switch (argv[i][j]) {
+                    case 'l':
+                        opts->option_l = 1;
+                        break;
+                    case 'a':
+                        opts->option_a = 1;
+                        break;
+                    case 'f':
+                        opts->option_f = 1;
+                        break;
+                    default:
+                        printf("\033[0;31m✘ nsh: invalid option -- '%c'\n\033[0m", argv[i][j]);
+                        exit(EXIT_FAILURE); // Exit on invalid option
+                }
+            }
+        } else {
+            // Assume it's the directory path
+            *directory = argv[i];
+        }
+    }
+}
 
 bool illegal_characters_check(const char *str, const char illegal_chars[], int arrSize) {
     for (int i = 0; i < arrSize; i++) {
@@ -24,14 +54,12 @@ bool illegal_characters_check(const char *str, const char illegal_chars[], int a
 }
 
 int command_tokenizer(char *command, char *currentDirectory) {
-    // Initialize argument pointers and other variables
+    // Add command to history
     add_to_history(command);
-    if (ps_count > 3 && ps_count < 4) {
-        printf("Bienvenidos a Nuevo PS, una agencia renovada.");
-    }
 
     char *args[MAX_ARGS] = {NULL};
     int argCount = 0;
+
     char illegal_characters[] = {
             ' ', '\t', '\n', '\r', // Whitespace and control characters
             '!', '"', '#', '$', '%', '&', // Special symbols used in shell
@@ -79,69 +107,101 @@ int command_tokenizer(char *command, char *currentDirectory) {
     for (int i = 0; i < pipeCount; i++) {
         char *currentCommand = pipeCommands[i];
 
-        // Tokenize the current command and extract the main command
-        char *cmd = strtok(currentCommand, " ");
-        if (!cmd) continue;
-
-        // Reset arguments for the current command
+        // Custom tokenizer that respects quotes
+        char *cmd = NULL;
         argCount = 0;
         memset(args, 0, sizeof(args));
+        bool in_quotes = false;
+        char quote_char = '\0';
 
-        // Extract arguments safely and prevent out-of-bounds errors
-        char *token;
-        while ((token = strtok(NULL, " ")) != NULL) {
-            if (argCount < MAX_ARGS - 1) {
-                args[argCount++] = token;
-            } else if (argCount >= MAX_ARGS){
-                printf("\033[0;31m✘ nsh: Too many arguments. Only the first %d will be used.\n\033[0m", MAX_ARGS);
-                break;
+        char *token_start = currentCommand;
+        char *ptr = currentCommand;
+
+        while (*ptr != '\0') {
+            if (!in_quotes && (*ptr == '\'' || *ptr == '"')) {
+                // Start of quoted string
+                in_quotes = true;
+                quote_char = *ptr;
+                token_start = ptr + 1;
+            } else if (in_quotes && *ptr == quote_char) {
+                // End of quoted string
+                in_quotes = false;
+                *ptr = '\0';  // Null-terminate the quoted string
+                args[argCount++] = token_start;
+            } else if (!in_quotes && isspace((unsigned char)*ptr)) {
+                // End of a token outside of quotes
+                *ptr = '\0';  // Null-terminate the token
+                if (token_start != ptr) {
+                    args[argCount++] = token_start;
+                }
+                token_start = ptr + 1;
             }
+            ptr++;
         }
 
-        char *argv[MAX_ARGS + 2]; // +2 for cmd and NULL terminator
-        argv[0] = cmd;
-        for (int j = 0; j < argCount; j++) {
-            argv[j + 1] = args[j];
+        // Add last token if there's any remaining
+        if (token_start != ptr && *token_start != '\0') {
+            args[argCount++] = token_start;
         }
-        argv[argCount + 1] = NULL;
+
+        // Check if we have a command
+        if (argCount == 0) {
+            continue;
+        }
+
+        // Set the command as the first argument
+        cmd = args[0];
+
+        // Prepare arguments for execution
+        char *argv[MAX_ARGS + 2];
+        argv[0] = cmd;
+        for (int j = 1; j < argCount; j++) {
+            argv[j] = args[j];
+        }
+        argv[argCount] = NULL;
+
+        // Options structure
+        Options opts;
+        char *directory = NULL;
+        parse_options(argCount, argv, &opts, &directory);
 
         // Call the appropriate function based on the command
         if (strcmp(cmd, "pwd") == 0) {
             print_working_directory();
         } else if (strcmp(cmd, "ls") == 0) {
-            list_directory(currentDirectory, argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
+            list_directory(argCount, argv, currentDirectory);
         } else if (strcmp(cmd, "cd") == 0) {
-            change_directory(args[0], currentDirectory);
+            change_directory(directory ? directory : currentDirectory, currentDirectory);
         } else if (strcmp(cmd, "whoami") == 0) {
             who_am_i();
         } else if (strcmp(cmd, "hostname") == 0) {
             hostname();
         } else if (strcmp(cmd, "echo") == 0) {
-            echo(argCount > 0 ? args[0] : NULL);
+            echo(argCount > 1 ? argv[1] : NULL);
         } else if (strcmp(cmd, "history") == 0) {
-            handle_history(cmd, argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
+            handle_history(cmd, argCount > 1 ? argv[1] : NULL, argCount > 2 ? argv[2] : NULL);
         } else if (strcmp(cmd, "clear") == 0) {
             clear();
         } else if (strcmp(cmd, "help") == 0) {
-            help_page(argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
+            help_page(argCount > 1 ? argv[1] : NULL, argCount > 2 ? argv[2] : NULL);
         } else if (strcmp(cmd, "exit") == 0) {
             close_shell();
         } else if (strcmp(cmd, "env") == 0) {
             environment_variables(NULL);
         } else if (strcmp(cmd, "alias") == 0 || strcmp(cmd, "unalias") == 0){
-            handle_alias(argCount > 0 ? args[0] : NULL, argCount > 1 ? args[1] : NULL);
+            handle_alias(argCount > 1 ? argv[1] : NULL, argCount > 2 ? argv[2] : NULL);
         } else if (illegal_characters_check(cmd, illegal_characters, sizeof(illegal_characters))) {
             printf("\033[0;31m✘ nsh: illegal character found: %s%s\n\033[0m", cmd, ". For further information type help");
         } else if (is_a_binary(cmd) == EXIT_SUCCESS) {
             if (new_process(cmd, argv) != 0) {
                 return EXIT_FAILURE;
             }
-
             return EXIT_SUCCESS;
         } else {
             printf("\033[0;31m✘ nsh: command not found: %s\n\033[0m", cmd);
             return EXIT_FAILURE;
         }
     }
+
     return EXIT_SUCCESS;
 }

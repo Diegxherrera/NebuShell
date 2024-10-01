@@ -4,12 +4,7 @@
 #include <sys/stat.h>
 #include <ctype.h>
 #include "../tools/nebula_tools.h"
-
-#define MAX_HISTORY 1024
-#define MAX_COMMAND_LENGTH 1024
-#define MAX_LINES 1024
-#define LINES_TO_REMOVE 100
-#define MAX_LINE_LENGTH 1024
+#include "../constants.h"
 
 static char history[MAX_HISTORY][MAX_COMMAND_LENGTH];
 static int current_pos = 0;
@@ -23,8 +18,8 @@ int init_history() {
         return EXIT_FAILURE;
     }
 
-    char *history_path = malloc(MIN_PATH_LENGTH * sizeof(char) + 1);
-    size_t path_size = MIN_PATH_LENGTH;
+    char *history_path = malloc(MAX_PATH_LENGTH * sizeof(char) + 1);
+    size_t path_size = MAX_PATH_LENGTH;
 
     snprintf(history_path, path_size, "%s/.nsh_history", home);
 
@@ -175,7 +170,7 @@ void add_to_history(const char *command) {
 
 int show_history() {
     FILE *fptr;
-    size_t path_length = MIN_PATH_LENGTH;
+    size_t path_length = MAX_PATH_LENGTH;
     char *path = malloc(path_length * sizeof(char) + 1);
     if (path == NULL) {
         fprintf(stderr, " ✘ nsh: Memory allocation failed for path.\n");
