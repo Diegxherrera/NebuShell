@@ -54,6 +54,13 @@ int is_a_binary(const char *cmd) {
         }
         dir = strtok(NULL, ":");
     }
-    free(path_dup);
-    return EXIT_FAILURE;
+
+    // Conditional whether path_dup is null or not to be freed or not.
+    if (path_dup == NULL) {
+        return EXIT_FAILURE;
+    } else if (path_dup != NULL) {
+        free(path_dup);
+        return EXIT_FAILURE;
+    }
+
 }

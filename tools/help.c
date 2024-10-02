@@ -39,7 +39,7 @@ int help_page(char *option, char *command) {
     }
 
     // Read and display the help page
-    if (open_file(help_page_path, "-r") != EXIT_SUCCESS) {
+    if (open_file(help_page_path, "-r", NULL) != EXIT_SUCCESS) {
         fprintf(stderr, "✘ nsh: Could not display help page: %s\n", help_page_path);
         return EXIT_FAILURE;
     }
@@ -47,4 +47,5 @@ int help_page(char *option, char *command) {
 }
 
 int init_help_pages() {
+
 }

@@ -1,6 +1,16 @@
 #ifndef NEBUSHELL_PARSER_H
 #define NEBUSHELL_PARSER_H
 
-int command_tokenizer(char command[1024], char *currentDirectory);
+#define MAX_ARGS 1024
+#define MAX_PIPES 1024
 
-#endif //NEBUSHELL_PARSER_H
+typedef struct {
+    int option_l;
+    int option_a;
+    int option_f;
+} Options;
+
+void parse_options(int argc, char *argv[], Options *opts, char **directory);
+int command_tokenizer(char *command, char *currentDirectory);
+
+#endif // NEBUSHELL_PARSER_H

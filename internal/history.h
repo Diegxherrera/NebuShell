@@ -3,8 +3,8 @@
 
 int init_history();
 void add_to_history(const char *command);
-const char *get_last_command();
-void show_history(char *args);
+void show_history();
 void clean_history(const char* filename);
+int handle_history(char *cmd, char *arg1, char *arg2);
 
 #endif // NEBUSHELL_HISTORY_H

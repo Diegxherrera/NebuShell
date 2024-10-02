@@ -4,12 +4,7 @@
 #include <sys/stat.h>
 #include <ctype.h>
 #include "../tools/nebula_tools.h"
-
-#define MAX_HISTORY 1024
-#define MAX_COMMAND_LENGTH 1024
-#define MAX_LINES 1024
-#define LINES_TO_REMOVE 100
-#define MAX_LINE_LENGTH 1024
+#include "../constants.h"
 
 static char history[MAX_HISTORY][MAX_COMMAND_LENGTH];
 static int current_pos = 0;
@@ -23,26 +18,32 @@ int init_history() {
         return EXIT_FAILURE;
     }
 
-    char *path = malloc(MIN_PATH_LENGTH * sizeof(char));
-    size_t path_size = MIN_PATH_LENGTH;
+    char *history_path = malloc(MAX_PATH_LENGTH * sizeof(char) + 1);
+    size_t path_size = MAX_PATH_LENGTH;
 
-    fptr = fopen(path, "r");
+    snprintf(history_path, path_size, "%s/.nsh_history", home);
+
+    fptr = fopen(history_path, "r");
     if (fptr == NULL) {
         // Create a new history file if none exists
-        fptr = fopen(path, "w");
+        fptr = fopen(history_path, "w");
         if (fptr == NULL) {
-            perror("Failed to create history file");
+            perror(" ✘ nsh: Failed to create history file");
 
-            free(path);
+            if (history_path != NULL) {
+                free(history_path);
+            }
             return EXIT_FAILURE;
         }
 
         // Set the file permissions to read and write for the user
-        if (chmod(path, S_IRUSR | S_IWUSR) != 0) {
-            perror("Failed to set permissions on history file");
+        if (chmod(history_path, S_IRUSR | S_IWUSR) != 0) {
+            perror(" ✘ nsh: Failed to set permissions on history file");
             fclose(fptr);
 
-            free(path);
+            if (history_path != NULL){
+                free(history_path);
+            }
             return EXIT_FAILURE;
         }
     } else {
@@ -51,25 +52,24 @@ int init_history() {
             history[current_pos][strcspn(history[current_pos], "\n")] = 0;
             current_pos++;
         }
-
-        free(path);
-        return EXIT_SUCCESS;
     }
 
+    free(history_path);
     fclose(fptr);
+    return EXIT_SUCCESS;
 }
 
 void clean_history(const char *filename) {
     FILE *input_file = fopen(filename, "r");
     if (input_file == NULL) {
-        perror("Unable to open the input file");
+        perror(" ✘ nsh: Unable to open the input file");
         return;
     }
 
     // Create a temporary file to store the modified content
     FILE *temp_file = tmpfile();
     if (temp_file == NULL) {
-        perror("Unable to create a temporary file");
+        perror(" ✘ nsh: Unable to create a temporary file");
         fclose(input_file);
         return;
     }
@@ -103,7 +103,7 @@ void clean_history(const char *filename) {
         fclose(input_file);
         input_file = fopen(filename, "w");
         if (input_file == NULL) {
-            perror("Unable to reopen the file for writing");
+            perror(" ✘ nsh: Unable to reopen the file for writing");
             fclose(temp_file);
             return;
         }
@@ -122,7 +122,7 @@ void add_to_history(const char *command) {
     FILE *fptr;
     char *home = getenv("HOME");
     if (home == NULL) {
-        fprintf(stderr, "Environment variable HOME is not set.\n");
+        fprintf(stderr, " ✘ nsh: Environment variable HOME is not set.\n");
         return;
     }
 
@@ -132,7 +132,7 @@ void add_to_history(const char *command) {
     // Open the history file in append mode
     fptr = fopen(path, "a");
     if (fptr == NULL) {
-        perror("Failed to open history file");
+        perror(" ✘ nsh: Failed to open history file");
         return;
     }
 
@@ -156,7 +156,7 @@ void add_to_history(const char *command) {
 
     // Write the command to the file
     if (fprintf(fptr, "%s\n", command) < 0) {
-        perror("Failed to write to history file");
+        perror(" ✘ nsh: Failed to write to history file");
     }
 
     // Close the file
@@ -168,23 +168,30 @@ void add_to_history(const char *command) {
     history_pos = current_pos;
 }
 
-int show_history(char *args) {
+int show_history() {
     FILE *fptr;
-    char *path = malloc(MIN_PATH_LENGTH * sizeof (char));
-    size_t path_length = MIN_PATH_LENGTH;
-    char command[MAX_COMMAND_LENGTH];
-
-    char *home = getenv("HOME");
-    if (home == NULL) {
-        fprintf(stderr, "Environment variable HOME is not set.\n");
+    size_t path_length = MAX_PATH_LENGTH;
+    char *path = malloc(path_length * sizeof(char) + 1);
+    if (path == NULL) {
+        fprintf(stderr, " ✘ nsh: Memory allocation failed for path.\n");
         return EXIT_FAILURE;
     }
 
+    char *home = getenv("HOME");
+    if (home == NULL) {
+        fprintf(stderr, " ✘ nsh: Environment variable HOME is not set.\n");
+        free(path); // Don't forget to free the memory on failure
+        return EXIT_FAILURE;
+    }
+
+    // Calculate required length for the path
     int required_length = snprintf(NULL, 0, "%s/.nsh_history", home) + 1; // +1 for the null-terminator
+
+    // Resize if the required length is greater than the initial allocation
     if (required_length > path_length) {
         char *new_path = realloc(path, required_length * sizeof(char));
         if (new_path == NULL) {
-            fprintf(stderr, "Memory reallocation failed for path.\n");
+            fprintf(stderr, " ✘ nsh: Memory reallocation failed for path.\n");
             free(path); // Free the old path before returning
             return EXIT_FAILURE;
         }
@@ -197,21 +204,32 @@ int show_history(char *args) {
 
     fptr = fopen(path, "r");
     if (fptr == NULL) {
-        perror("Failed to open history file");
+        perror(" ✘ nsh: Failed to open history file");
+        free(path); // Free the memory before returning
         return EXIT_FAILURE;
     }
 
-    if (strcmp(args, NULL) == 0) {
-        while (fgets(command, MAX_COMMAND_LENGTH, fptr)) {
-            printf("%s", command);
-        }
-    } else if (strcmp(args, "clean") == 0) {
-        clean_history(path);
-    } else if (strcmp(args, "-f") == 0) {
-        // Do something else
+    char command[MAX_COMMAND_LENGTH];
+    while (fgets(command, MAX_COMMAND_LENGTH, fptr)) {
+        printf("%s", command);
     }
 
+    // Clean up
     free(path);
     fclose(fptr);
+
+    return EXIT_SUCCESS;
+}
+
+int handle_history(char *cmd, char *arg1, char *arg2) {
+    if (strcmp(cmd, "history") == 0) {
+        if (show_history() != 0) {
+            return EXIT_FAILURE;
+        }
+    } else if (strcmp(cmd, "history -d *") == 0) {
+
+
+        return EXIT_SUCCESS;
+    }
     return EXIT_SUCCESS;
 }
