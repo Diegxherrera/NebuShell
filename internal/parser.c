@@ -10,7 +10,7 @@
 #include "jobs.h"
 #include "../tools/alias.h"
 
-void parse_options(int argc, char *argv[], Options *opts, char **directory) {
+int parse_options(int argc, char *argv[], Options *opts, char **directory) {
     // Initialize options to 0 (off)
     opts->option_l = 0;
     opts->option_a = 0;
@@ -33,13 +33,15 @@ void parse_options(int argc, char *argv[], Options *opts, char **directory) {
                         opts->option_f = 1;
                         break;
                     default:
-                        printf("\033[0;31m✘ nsh: invalid option -- '%c'\n\033[0m", argv[i][j]);
-                        exit(EXIT_FAILURE); // Exit on invalid option
+                        printf("\033[0;31m✘ nsh: bad option -- '%c'\n\033[0m", argv[i][j]);
+                        return EXIT_FAILURE;
                 }
+                return EXIT_SUCCESS;
             }
         } else {
             // Assume it's the directory path
             *directory = argv[i];
+            return EXIT_SUCCESS;
         }
     }
 }
@@ -163,7 +165,6 @@ int command_tokenizer(char *command, char *currentDirectory) {
         // Options structure
         Options opts;
         char *directory = NULL;
-        parse_options(argCount, argv, &opts, &directory);
 
         // Call the appropriate function based on the command
         if (strcmp(cmd, "pwd") == 0) {

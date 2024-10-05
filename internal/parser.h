@@ -10,7 +10,7 @@ typedef struct {
     int option_f;
 } Options;
 
-void parse_options(int argc, char *argv[], Options *opts, char **directory);
+int parse_options(int argc, char *argv[], Options *opts, char **directory);
 int command_tokenizer(char *command, char *currentDirectory);
 
 #endif // NEBUSHELL_PARSER_H

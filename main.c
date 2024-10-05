@@ -37,7 +37,7 @@ int main() {
 
     // Main command loop
     while (!exitSignal) {
-        printf("%s", "NebuShell~0.51$ ");
+        printf("%s", "NebuShell~0.52$ ");
         ssize_t characters = getline(&buffer, &buffer_size, stdin);
         if (characters == -1) {
             // Handle error or EOF
