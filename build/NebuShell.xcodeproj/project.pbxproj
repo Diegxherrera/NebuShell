@@ -1,0 +1,825 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		1B62B1ECF1BF27A012CA1896 /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 93189A0B4EE74426A3D2820D /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				4C58311D8694054D8A0033AD /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+		A7C54CED54E992A9146FFAA3 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 195EE29A05804BE9BC8B5C50 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				A79182F6780565883ADD5A3E /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				DC61563706EF4467853A8A11 /* PBXTargetDependency */,
+				CFD92DDF9D034150AEAED094 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0179EF58FA6641BBB6E1C248 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.c */ = {isa = PBXBuildFile; fileRef = 6F4D8E7C25C0478990DB11E6 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.c */; };
+		07F9193CBD104816A02F6A2D /* /Users/diegxherrera/CLionProjects/NebuShell/constants.h */ = {isa = PBXBuildFile; fileRef = 4783396E05C74CDAB1523927 /* /Users/diegxherrera/CLionProjects/NebuShell/constants.h */; };
+		089B25078BF44B6CB4EC715B /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.h */ = {isa = PBXBuildFile; fileRef = F35FA5DB091A41B380E4620E /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.h */; };
+		28A26BF74AC2427FA319EE9D /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.c */ = {isa = PBXBuildFile; fileRef = 0B8B01CB482E4BE69116A5C5 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.c */; };
+		299A58E1E876469BB5EB2563 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.h */ = {isa = PBXBuildFile; fileRef = 5AEEFD0E72A3479B894D8313 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.h */; };
+		2E1809D1D65E4333B8B00609 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.h */ = {isa = PBXBuildFile; fileRef = EB161CD080C14CFD89618ED3 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.h */; };
+		2E661EDF403B40E9B15819B3 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.h */ = {isa = PBXBuildFile; fileRef = 80BC8C31F3234A5DB6582B10 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.h */; };
+		350BF42FE4F44D38ABC8CD5B /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.c */ = {isa = PBXBuildFile; fileRef = 0B1A1530EA7B498D80D5F1F9 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.c */; };
+		3AAAF55E03BE4AA2BB87FEAD /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.h */ = {isa = PBXBuildFile; fileRef = 8A1BBAD9577A4CF3876E4A47 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.h */; };
+		41120B6D63984C5F922D714F /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.h */ = {isa = PBXBuildFile; fileRef = E3BB3A8C77464D81BEEC5657 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.h */; };
+		496323573B64488485840C16 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.c */ = {isa = PBXBuildFile; fileRef = 574F40AB6286484C92B36055 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.c */; };
+		496D78B4C2F34BF89BE95B1E /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.h */ = {isa = PBXBuildFile; fileRef = D3E65655D770456C81697AAF /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.h */; };
+		5985BEE7AF3D4FE0A09C91BD /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.h */ = {isa = PBXBuildFile; fileRef = 0098CB6BC8684284B946A0F3 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.h */; };
+		5C8E3D9DD8E64ABDA46E06B9 /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 0CE0DB6E3F6349F2849E6F9D /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */; };
+		63274333E995461D82529BDA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.c */ = {isa = PBXBuildFile; fileRef = 47A91DF87B414BC2BB34FBCA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.c */; };
+		65CB26A879754FD9A3E8C606 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.c */ = {isa = PBXBuildFile; fileRef = 5BDBF8892BF84C0896C25DC2 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.c */; };
+		6F8D1ABBC07E4A43A171FC09 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.c */ = {isa = PBXBuildFile; fileRef = F5F6EDA8E5094737AF8D07A6 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.c */; };
+		89DA7D68BCAF462798CA22D3 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.h */ = {isa = PBXBuildFile; fileRef = 3E7C32E9B0D740B5B0EACAED /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.h */; };
+		9C9D193547AF4108A86AE197 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.c */ = {isa = PBXBuildFile; fileRef = FB96C117C2E34DBDA574649A /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.c */; };
+		A57F81E03D3C491C9B1794BF /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.h */ = {isa = PBXBuildFile; fileRef = 9A5E6AD6BA5C4E809388FCB5 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.h */; };
+		A630166249734854ABF8D764 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.h */ = {isa = PBXBuildFile; fileRef = 056957B181104C649D90C415 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.h */; };
+		CCF42A38FB1A483297EC861E /* /Users/diegxherrera/CLionProjects/NebuShell/main.c */ = {isa = PBXBuildFile; fileRef = 35A2FAD6EFA647A99FF38C8C /* /Users/diegxherrera/CLionProjects/NebuShell/main.c */; };
+		EA14621B2233423C8AF59CCB /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.c */ = {isa = PBXBuildFile; fileRef = 8EFA9A525BAB4A71BFDBCFBA /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.c */; };
+		EDCCF220F7134917A79F127C /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.c */ = {isa = PBXBuildFile; fileRef = 8E00F86DAB5047EFB50C46B0 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.c */; };
+		F11E8C63EC8C408C80D5C6BA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.c */ = {isa = PBXBuildFile; fileRef = D4EF3A891F6B472585CD4C66 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		27CE7A531F3840ACB491E1CE /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		5A58569825E64504BC3B5F94 /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		63EAC1A77E1D4730885E474C /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		C64ECD97A5314C6B90F3BA42 /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		0C09C1E66D5C475AA2B9497C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F83E959A80642E1B8BF44C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A47C5AC42CE762F4BDE7BFAF;
+			remoteInfo = NebuShell;
+		};
+		40733E2D343B4315915FCE06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F83E959A80642E1B8BF44C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1B62B1ECF1BF27A012CA1896;
+			remoteInfo = ZERO_CHECK;
+		};
+		4175D89D850A45C082C2EA13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F83E959A80642E1B8BF44C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1B62B1ECF1BF27A012CA1896;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0098CB6BC8684284B946A0F3 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = parser.h; path = internal/parser.h; sourceTree = SOURCE_ROOT; };
+		056957B181104C649D90C415 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = file_handler.h; path = tools/file_handler.h; sourceTree = SOURCE_ROOT; };
+		0B1A1530EA7B498D80D5F1F9 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = list_directory.c; path = tools/list_directory.c; sourceTree = SOURCE_ROOT; };
+		0B8B01CB482E4BE69116A5C5 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = file_handler.c; path = tools/file_handler.c; sourceTree = SOURCE_ROOT; };
+		0CE0DB6E3F6349F2849E6F9D /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		292004E779EE4A2EAB2CA824 /* NebuShell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = NebuShell; sourceTree = BUILT_PRODUCTS_DIR; };
+		35A2FAD6EFA647A99FF38C8C /* /Users/diegxherrera/CLionProjects/NebuShell/main.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = main.c; path = main.c; sourceTree = SOURCE_ROOT; };
+		3E7C32E9B0D740B5B0EACAED /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = nebula_tools.h; path = tools/nebula_tools.h; sourceTree = SOURCE_ROOT; };
+		4783396E05C74CDAB1523927 /* /Users/diegxherrera/CLionProjects/NebuShell/constants.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = constants.h; path = constants.h; sourceTree = SOURCE_ROOT; };
+		47A91DF87B414BC2BB34FBCA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = parser.c; path = internal/parser.c; sourceTree = SOURCE_ROOT; };
+		574F40AB6286484C92B36055 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = bin.c; path = internal/bin.c; sourceTree = SOURCE_ROOT; };
+		5AEEFD0E72A3479B894D8313 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = bootstrap.h; path = internal/bootstrap.h; sourceTree = SOURCE_ROOT; };
+		5BDBF8892BF84C0896C25DC2 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = alias.c; path = tools/alias.c; sourceTree = SOURCE_ROOT; };
+		6F4D8E7C25C0478990DB11E6 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = help.c; path = tools/help.c; sourceTree = SOURCE_ROOT; };
+		80BC8C31F3234A5DB6582B10 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = bin.h; path = internal/bin.h; sourceTree = SOURCE_ROOT; };
+		82F37583F1E64B0BBF2C648A /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		8A1BBAD9577A4CF3876E4A47 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = jobs.h; path = internal/jobs.h; sourceTree = SOURCE_ROOT; };
+		8E00F86DAB5047EFB50C46B0 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = signal_handler.c; path = tools/signal_handler.c; sourceTree = SOURCE_ROOT; };
+		8EFA9A525BAB4A71BFDBCFBA /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = nebula_tools.c; path = tools/nebula_tools.c; sourceTree = SOURCE_ROOT; };
+		9A5E6AD6BA5C4E809388FCB5 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = history.h; path = internal/history.h; sourceTree = SOURCE_ROOT; };
+		D3E65655D770456C81697AAF /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = alias.h; path = tools/alias.h; sourceTree = SOURCE_ROOT; };
+		D4EF3A891F6B472585CD4C66 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = history.c; path = internal/history.c; sourceTree = SOURCE_ROOT; };
+		E3BB3A8C77464D81BEEC5657 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = help.h; path = tools/help.h; sourceTree = SOURCE_ROOT; };
+		EB161CD080C14CFD89618ED3 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = list_directory.h; path = tools/list_directory.h; sourceTree = SOURCE_ROOT; };
+		F35FA5DB091A41B380E4620E /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = signal_handler.h; path = tools/signal_handler.h; sourceTree = SOURCE_ROOT; };
+		F5F6EDA8E5094737AF8D07A6 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = jobs.c; path = internal/jobs.c; sourceTree = SOURCE_ROOT; };
+		FB96C117C2E34DBDA574649A /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = bootstrap.c; path = internal/bootstrap.c; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9EB58A4C30824FB9B3F516CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D9D506AE386401DB341A550 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				574F40AB6286484C92B36055 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.c */,
+				FB96C117C2E34DBDA574649A /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.c */,
+				D4EF3A891F6B472585CD4C66 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.c */,
+				F5F6EDA8E5094737AF8D07A6 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.c */,
+				47A91DF87B414BC2BB34FBCA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.c */,
+				35A2FAD6EFA647A99FF38C8C /* /Users/diegxherrera/CLionProjects/NebuShell/main.c */,
+				5BDBF8892BF84C0896C25DC2 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.c */,
+				0B8B01CB482E4BE69116A5C5 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.c */,
+				6F4D8E7C25C0478990DB11E6 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.c */,
+				0B1A1530EA7B498D80D5F1F9 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.c */,
+				8EFA9A525BAB4A71BFDBCFBA /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.c */,
+				8E00F86DAB5047EFB50C46B0 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.c */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		105FC132DA1F4EAEAFE07B6A /* NebuShell */ = {
+			isa = PBXGroup;
+			children = (
+				0D9D506AE386401DB341A550 /* Source Files */,
+				2FB93F039BFE42E6A62BE34B /* Header Files */,
+				0CE0DB6E3F6349F2849E6F9D /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */,
+			);
+			name = NebuShell;
+			sourceTree = "<group>";
+		};
+		2FB93F039BFE42E6A62BE34B /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				4783396E05C74CDAB1523927 /* /Users/diegxherrera/CLionProjects/NebuShell/constants.h */,
+				80BC8C31F3234A5DB6582B10 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.h */,
+				5AEEFD0E72A3479B894D8313 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.h */,
+				9A5E6AD6BA5C4E809388FCB5 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.h */,
+				8A1BBAD9577A4CF3876E4A47 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.h */,
+				0098CB6BC8684284B946A0F3 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.h */,
+				D3E65655D770456C81697AAF /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.h */,
+				056957B181104C649D90C415 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.h */,
+				E3BB3A8C77464D81BEEC5657 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.h */,
+				EB161CD080C14CFD89618ED3 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.h */,
+				3E7C32E9B0D740B5B0EACAED /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.h */,
+				F35FA5DB091A41B380E4620E /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.h */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		494CBD8CD0284D9CB7CEB3FD = {
+			isa = PBXGroup;
+			children = (
+				105FC132DA1F4EAEAFE07B6A /* NebuShell */,
+				FC8BDA8AF167473FA2A819EE /* ALL_BUILD */,
+				7952A832C1DA4E209878238C /* Products */,
+				6F41A1DB24694C6EAD7FEC33 /* Frameworks */,
+				A9C00CAE8A5C40F6A49AA18C /* Resources */,
+			);
+			sourceTree = "<group>";
+		};
+		6F41A1DB24694C6EAD7FEC33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7952A832C1DA4E209878238C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				292004E779EE4A2EAB2CA824 /* NebuShell */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A32D1B2313504ABC9A0EEA3E /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		A9C00CAE8A5C40F6A49AA18C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FC8BDA8AF167473FA2A819EE /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				A32D1B2313504ABC9A0EEA3E /* CMake Rules */,
+				82F37583F1E64B0BBF2C648A /* /Users/diegxherrera/CLionProjects/NebuShell/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A47C5AC42CE762F4BDE7BFAF /* NebuShell */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B3E5EED6934D17A4AC366E /* Build configuration list for PBXNativeTarget "NebuShell" */;
+			buildPhases = (
+				8602076AF2EE4B92A05ABB4B /* Sources */,
+				9EB58A4C30824FB9B3F516CE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CBBB97F0699D46DFAB2CB570 /* PBXTargetDependency */,
+			);
+			name = NebuShell;
+			productName = NebuShell;
+			productReference = 292004E779EE4A2EAB2CA824 /* NebuShell */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F83E959A80642E1B8BF44C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1620;
+			};
+			buildConfigurationList = B18B5F0DAF2B477798FE13B1 /* Build configuration list for PBXProject "NebuShell" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				5A58569825E64504BC3B5F94 /* Debug */,
+				C64ECD97A5314C6B90F3BA42 /* Release */,
+				27CE7A531F3840ACB491E1CE /* MinSizeRel */,
+				63EAC1A77E1D4730885E474C /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = 494CBD8CD0284D9CB7CEB3FD;
+			projectDirPath = /Users/diegxherrera/CLionProjects/NebuShell;
+			projectRoot = "";
+			targets = (
+				A7C54CED54E992A9146FFAA3 /* ALL_BUILD */,
+				A47C5AC42CE762F4BDE7BFAF /* NebuShell */,
+				1B62B1ECF1BF27A012CA1896 /* ZERO_CHECK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		4C58311D8694054D8A0033AD /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+/Users/diegxherrera/CLionProjects/NebuShell/build/CMakeFiles/ZERO_CHECK			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  make -f /Users/diegxherrera/CLionProjects/NebuShell/build/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  make -f /Users/diegxherrera/CLionProjects/NebuShell/build/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  make -f /Users/diegxherrera/CLionProjects/NebuShell/build/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  make -f /Users/diegxherrera/CLionProjects/NebuShell/build/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		A79182F6780565883ADD5A3E /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+/Users/diegxherrera/CLionProjects/NebuShell/build/CMakeFiles/ALL_BUILD			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/diegxherrera/CLionProjects/NebuShell/build
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8602076AF2EE4B92A05ABB4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				496323573B64488485840C16 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bin.c */,
+				9C9D193547AF4108A86AE197 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/bootstrap.c */,
+				F11E8C63EC8C408C80D5C6BA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/history.c */,
+				6F8D1ABBC07E4A43A171FC09 /* /Users/diegxherrera/CLionProjects/NebuShell/internal/jobs.c */,
+				63274333E995461D82529BDA /* /Users/diegxherrera/CLionProjects/NebuShell/internal/parser.c */,
+				CCF42A38FB1A483297EC861E /* /Users/diegxherrera/CLionProjects/NebuShell/main.c */,
+				65CB26A879754FD9A3E8C606 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/alias.c */,
+				28A26BF74AC2427FA319EE9D /* /Users/diegxherrera/CLionProjects/NebuShell/tools/file_handler.c */,
+				0179EF58FA6641BBB6E1C248 /* /Users/diegxherrera/CLionProjects/NebuShell/tools/help.c */,
+				350BF42FE4F44D38ABC8CD5B /* /Users/diegxherrera/CLionProjects/NebuShell/tools/list_directory.c */,
+				EA14621B2233423C8AF59CCB /* /Users/diegxherrera/CLionProjects/NebuShell/tools/nebula_tools.c */,
+				EDCCF220F7134917A79F127C /* /Users/diegxherrera/CLionProjects/NebuShell/tools/signal_handler.c */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CBBB97F0699D46DFAB2CB570 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1B62B1ECF1BF27A012CA1896 /* ZERO_CHECK */;
+			targetProxy = 40733E2D343B4315915FCE06 /* PBXContainerItemProxy */;
+		};
+		CFD92DDF9D034150AEAED094 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A47C5AC42CE762F4BDE7BFAF /* NebuShell */;
+			targetProxy = 0C09C1E66D5C475AA2B9497C /* PBXContainerItemProxy */;
+		};
+		DC61563706EF4467853A8A11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1B62B1ECF1BF27A012CA1896 /* ZERO_CHECK */;
+			targetProxy = 4175D89D850A45C082C2EA13 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E6EB84B78B449ADB1F55F47 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/diegxherrera/CLionProjects/NebuShell/build/MinSizeRel;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = ("    -DNDEBUG '-std=gnu11' ","$(inherited)");
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NebuShell;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/diegxherrera/CLionProjects/NebuShell/build/build/NebuShell.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		17EDE17DDCBC45DDBD7BD43C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/diegxherrera/CLionProjects/NebuShell/build/Release;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = ("    -DNDEBUG '-std=gnu11' ","$(inherited)");
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NebuShell;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/diegxherrera/CLionProjects/NebuShell/build/build/NebuShell.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		18C4082CD92F40EEB72BFFE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		61502EB6121142E296F86AC9 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		728CD6A91B4444BCA5B8EAE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		78D96EB44C6B4CB9AE61F239 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		9BFB25A6C0294EA5B91FA004 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/diegxherrera/CLionProjects/NebuShell/build/RelWithDebInfo;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = ("       -DNDEBUG '-std=gnu11' ","$(inherited)");
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NebuShell;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/diegxherrera/CLionProjects/NebuShell/build/build/NebuShell.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		C344704956D24BC49724BAF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk;
+				SYMROOT = /Users/diegxherrera/CLionProjects/NebuShell/build/build;
+			};
+			name = Debug;
+		};
+		C586C597062847218E4B6797 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		C8DC2277BBCD4081A6BFD5AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/diegxherrera/CLionProjects/NebuShell/build/Debug;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = ("   '-std=gnu11' ","$(inherited)");
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NebuShell;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/diegxherrera/CLionProjects/NebuShell/build/build/NebuShell.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		D306473609D0443C8D70BD73 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/diegxherrera/CLionProjects/NebuShell/build/build;
+			};
+			name = RelWithDebInfo;
+		};
+		D380C0B631234BAB95D7BA01 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/diegxherrera/CLionProjects/NebuShell/build/build;
+			};
+			name = MinSizeRel;
+		};
+		EB9F0A7A6C7B40E7B956B4F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/diegxherrera/CLionProjects/NebuShell/build/build;
+			};
+			name = Release;
+		};
+		EEF6A0EEAF8043E4858CE072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		F9984C76292A43FBAED5DE75 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		FCCB62C730BD4929A5C3D54B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		13B3E5EED6934D17A4AC366E /* Build configuration list for PBXNativeTarget "NebuShell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8DC2277BBCD4081A6BFD5AD /* Debug */,
+				17EDE17DDCBC45DDBD7BD43C /* Release */,
+				0E6EB84B78B449ADB1F55F47 /* MinSizeRel */,
+				9BFB25A6C0294EA5B91FA004 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		195EE29A05804BE9BC8B5C50 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				728CD6A91B4444BCA5B8EAE9 /* Debug */,
+				18C4082CD92F40EEB72BFFE6 /* Release */,
+				F9984C76292A43FBAED5DE75 /* MinSizeRel */,
+				C586C597062847218E4B6797 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		93189A0B4EE74426A3D2820D /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF6A0EEAF8043E4858CE072 /* Debug */,
+				FCCB62C730BD4929A5C3D54B /* Release */,
+				78D96EB44C6B4CB9AE61F239 /* MinSizeRel */,
+				61502EB6121142E296F86AC9 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B18B5F0DAF2B477798FE13B1 /* Build configuration list for PBXProject "NebuShell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C344704956D24BC49724BAF8 /* Debug */,
+				EB9F0A7A6C7B40E7B956B4F4 /* Release */,
+				D380C0B631234BAB95D7BA01 /* MinSizeRel */,
+				D306473609D0443C8D70BD73 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F83E959A80642E1B8BF44C8 /* Project object */;
+}

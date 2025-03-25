@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "jobs.h"
 
+#include <signal.h>
+
 void process_status(char *args) {
     if (strcmp(args, "-e") == 0) {
 
@@ -26,15 +28,15 @@ void process_status(char *args) {
     }
 }
 
-int new_process(char *cmd, char *argv[]) {
-    pid_t pid = fork();
+int new_process(const char *process, char *argv[]) {
+    const pid_t pid = fork();
 
     if (pid < 0) {
         perror("fork fail");
         return EXIT_FAILURE;
     } else if (pid == 0) {
         // Child process
-        execvp(cmd, argv);
+        execvp(process, argv);
         exit(EXIT_FAILURE);
     } else {
         // Parent process
@@ -43,6 +45,7 @@ int new_process(char *cmd, char *argv[]) {
         return WEXITSTATUS(status);
     }
 }
-int kill_process() {
+
+int kill_process(const char *process) {
 
 }

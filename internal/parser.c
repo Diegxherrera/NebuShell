@@ -5,10 +5,18 @@
 #include <stdbool.h>
 #include "parser.h"
 #include "../tools/nebula_tools.h"
+#include "../tools/alias.h"
 #include "bin.h"
 #include "history.h"
 #include "jobs.h"
-#include "../tools/alias.h"
+
+char lowercase_string(char *str) {
+    for(int i = 0; str[i]; i++){
+        str[i] = tolower(str[i]);
+    }
+
+    return *str;
+}
 
 int parse_options(int argc, char *argv[], Options *opts, char **directory) {
     // Initialize options to 0 (off)
@@ -36,8 +44,8 @@ int parse_options(int argc, char *argv[], Options *opts, char **directory) {
                         printf("\033[0;31m✘ nsh: bad option -- '%c'\n\033[0m", argv[i][j]);
                         return EXIT_FAILURE;
                 }
-                return EXIT_SUCCESS;
             }
+            return EXIT_SUCCESS;
         } else {
             // Assume it's the directory path
             *directory = argv[i];
@@ -162,12 +170,15 @@ int command_tokenizer(char *command, char *currentDirectory) {
         }
         argv[argCount] = NULL;
 
+        // Lowercase the command
+        *cmd = lowercase_string(cmd);
+
         // Options structure
         Options opts;
         char *directory = NULL;
 
         // Call the appropriate function based on the command
-        if (strcmp(cmd, "pwd") == 0) {
+        if ((strcmp(cmd, "pwd")) == 0) {
             print_working_directory();
         } else if (strcmp(cmd, "ls") == 0) {
             list_directory(argCount, argv, currentDirectory);

@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bootstrap.h"
+
+#include <string.h>
+
 #include "history.h"
 #include "../tools/alias.h"
 #include "../tools/signal_handler.h"
 
 int bootstrap() {
+    char *buffer = NULL;
+    size_t buffer_size[1024];
+
     int history_result = init_history();
     int signal_handler_result = set_up_signal_handler();
     int aliases_file_result = set_up_aliases();

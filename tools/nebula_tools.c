@@ -52,10 +52,10 @@ int change_directory(char *path, char *currentDirectory) {
 }
 
 int print_working_directory() {
-    char buffer[1024];
+    char buffer[MAX_DIRECTORY_LENGTH];
 
     if (getcwd(buffer, sizeof(buffer)) == NULL) {
-        perror("✘ nsh: Getcwd failed. Error Code: 4001");
+        perror("\n✘ nsh: Pwd failed. Error Code: 4001");
         return EXIT_FAILURE;
     } else {
         printf("%s\n", buffer);
@@ -107,7 +107,7 @@ int echo(char *args) {
 }
 
 void clear() {
-    // TBD
+    // To Be Dev'd
 }
 
 int close_shell() {

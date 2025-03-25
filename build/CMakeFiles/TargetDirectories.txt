@@ -1,0 +1,3 @@
+/Users/diegxherrera/CLionProjects/NebuShell/build/CMakeFiles/NebuShell.dir
+/Users/diegxherrera/CLionProjects/NebuShell/build/CMakeFiles/ALL_BUILD.dir
+/Users/diegxherrera/CLionProjects/NebuShell/build/CMakeFiles/ZERO_CHECK.dir

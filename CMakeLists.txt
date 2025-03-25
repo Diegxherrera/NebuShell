@@ -4,7 +4,6 @@ project(NebuShell C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(NebuShell
-        main.c
         internal/parser.c
         internal/bin.c
         internal/bin.h
@@ -28,4 +27,8 @@ add_executable(NebuShell
         tools/list_directory.c
         tools/list_directory.h
         constants.h
+        internal/parser.c
+        main.c
+        main.c
+        tools/type.c
 )

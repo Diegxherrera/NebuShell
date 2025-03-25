@@ -5,10 +5,9 @@
 #include <stdlib.h>
 #include <limits.h>
 
-
 int run_binary(char* bin) {
     fflush(stdout);
-    pid_t pid = fork();
+    const pid_t pid = fork();
 
     if (pid == -1) {
         perror("fork failed");

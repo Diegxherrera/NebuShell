@@ -5,6 +5,6 @@
 #ifndef NEBUSHELL_JOBS_H
 #define NEBUSHELL_JOBS_H
 
-int new_process(char *cmd, char *argv[]);
+int new_process(const char *cmd, char *argv[]);
 
 #endif //NEBUSHELL_JOBS_H
